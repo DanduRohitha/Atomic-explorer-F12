@@ -3,155 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Atom Universe</title>
 
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/welcome.css">
 </head>
-
-
-
-
 <body>
 
-<div class="container">
+    <div class="stars"></div>
 
-    <!-- Logo -->
+    <div class="container">
 
-    <!-- Title -->
-
-    <h1 class="title">
-        
-        Atom Universe
-        
-    </h1>
-
-    <p class="subtitle">
-        Configure Your Learning Experience
-    </p>
-
-    <!-- Form -->
-
-    <div class="form-section">
-
-        <h2> Enter your name</h2>
-
-        <input
-            type="text"
-             id="username"
-            placeholder="Enter your name"
-        >
-
-        <h2>Select Your Learning Path</h2>
-
-        <!-- Easy -->
-
-       <div class="difficulty-card">
-    <label>
-
-        <input type="radio" name="difficulty" value="Easy">
-
-        <div class="difficulty-info">
-
-            <div class="difficulty-top">
-                <h3> Easy</h3>
-                <span class="level-text">Explorer</span>
-            </div>
-
-            <p>Learn Atomic Fundamentals</p>
-
-        </div>
-
-    </label>
+        <div class="logo-wrapper">
+    <img src="images/atom-logo.png" class="main-logo">
 </div>
 
-<div class="difficulty-card">
-    <label>
+        <h1>Atom Universe</h1>
 
-        <input type="radio" name="difficulty" value="Medium" >
+        <p class="tagline">
+    Explore • Experiment • Build • Master
+</p>
 
-        <div class="difficulty-info">
+        <p class="description">
+    Explore atoms, build elements and learn the fascinating world of Atomic Science.
+</p>
 
-            <div class="difficulty-top">
-                <h3> Medium</h3>
-                <span class="level-text">Researcher</span>
-            </div>
+       
 
-            <p>Build and Analyze Atoms</p>
+        <div class="avatar-section">
+    <h3>Choose Your Explorer</h3>
 
-        </div>
+    <div class="avatar-container">
 
-    </label>
+       <div class="avatar-card" onclick="selectAvatar('Student Boy', this)">
+    <img src="https://cdn-icons-png.flaticon.com/512/4140/4140048.png">
+    <p>Explorer</p>
+    <span>Curious Learner</span>
 </div>
 
-<div class="difficulty-card">
-    <label>
-
-        <input type="radio" name="difficulty" value="Difficult" >
-
-        <div class="difficulty-info">
-
-            <div class="difficulty-top">
-                <h3> Difficult</h3>
-                <span class="level-text">Master Scientist</span>
-            </div>
-
-            <p>Advanced Atomic Challenges</p>
-
-        </div>
-
-    </label>
+<div class="avatar-card" onclick="selectAvatar('Student Girl', this)">
+    <img src="https://cdn-icons-png.flaticon.com/512/4140/4140051.png">
+    <p>Researcher</p>
+    <span>Knowledge Seeker</span>
 </div>
 
-        <!-- Button -->
+<div class="avatar-card" onclick="selectAvatar('Scientist', this)">
+    <img src="https://cdn-icons-png.flaticon.com/512/1995/1995574.png">
+    <p>Scientist</p>
+    <span>Innovation Guide</span>
+</div>
 
-   <button class="start-btn" onclick="startApp()">
-     Start Exploring →
+<div class="avatar-card" onclick="selectAvatar('Astronaut', this)">
+   <img src="https://cdn-icons-png.flaticon.com/512/3212/3212608.png">
+    <p>Astronaut</p>
+    <span>Space Pioneer</span>
+</div>
+
+<div class="avatar-card" onclick="selectAvatar('Chemist', this)">
+    <img src="https://cdn-icons-png.flaticon.com/512/2784/2784445.png">
+    <p>Chemist</p>
+    <span>Element Creator</span>
+</div>
+
+<div class="avatar-card" onclick="selectAvatar('AI Robot', this)">
+    <img src="https://cdn-icons-png.flaticon.com/512/4712/4712027.png">
+    <p>AI Assistant</p>
+    <span>Smart Companion</span>
+</div>
+
+    </div>
+</div>
+
+       <button class="enter-btn" onclick="enterUniverse()">
+    Enter Universe →
 </button>
 
     </div>
 
-    <!-- Footer -->
-
-    <footer>
-       Simulations • Interactive Labs • Certificates
-    </footer>
-
-</div>
-
+    <div class="shooting-star"></div>
+    
 <script>
+function selectAvatar(name, element){
 
-function startApp(){
+    localStorage.setItem("avatar", name);
 
-    const name =
-        document.getElementById("username").value.trim();
+    document.querySelectorAll(".avatar-card")
+    .forEach(card => card.classList.remove("selected"));
 
-    const difficulty =
-        document.querySelector(
-            'input[name="difficulty"]:checked'
-        );
-
-    if(name === ""){
-        alert("Please enter your name");
-        return;
-    }
-
-    if(!difficulty){
-        alert("Please select a difficulty level");
-        return;
-    }
-
-    localStorage.setItem("username", name);
-    localStorage.setItem(
-        "difficulty",
-        difficulty.value
-    );
-
-    window.location.href = "dashboard.html";
+    element.classList.add("selected");
 }
 
-</script>
+function enterUniverse(){
 
+    const avatar = localStorage.getItem("avatar");
+
+    if(!avatar){
+        alert("Please select an avatar first! 🧑‍🚀");
+        return;
+    }
+
+    window.location.href = "index.html";
+}
+</script>
+  
 
 </body>
 </html>
