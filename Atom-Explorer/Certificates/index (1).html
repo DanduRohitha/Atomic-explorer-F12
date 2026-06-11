@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Track your learning progress, view certificates, unlock achievements, and level up your rank in the Atom Universe.">
+  <title>Achievement Vault | Atom Universe Rewards Center</title>
+  
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="style (1).css">
+</head>
+<body>
+
+  <!-- App Header -->
+  <header>
+    <a href="#" class="logo" id="headerLogo">
+      <div class="logo-atom"></div>
+      <span>Atom Universe</span>
+    </a>
+    
+    <div class="user-profile-summary">
+      <div class="user-info-text">
+        <span class="user-name" id="profileUserName">
+  Student
+</span>
+        <span class="user-rank-badge" id="profileUserRank">Beginner</span>
+      </div>
+      <div class="user-avatar-container">
+        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" alt="Student Profile Avatar" class="user-avatar" id="profileAvatar">
+        <div class="user-status-dot"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Layout -->
+  <main class="dashboard-container">
+    
+    <!-- Left Column: Stats, Ranks, and Certificate Views -->
+    <div class="dashboard-left-panel">
+      
+      <!-- Rank Progression System -->
+      <section class="glass-panel rank-system" aria-labelledby="rankTitle">
+        <h2 class="section-title" id="rankTitle">🎖 Rank Progress System</h2>
+        
+        <div class="rank-progress-wrapper">
+          <div class="progress-track-bg"></div>
+          <div class="progress-track-fill" id="rankProgressFill"></div>
+          
+          <div class="milestones-container">
+            <!-- Beginner (0 Certs) -->
+            <div class="milestone-node unlocked active" data-certs="0" id="milestone-beginner">
+              <div class="milestone-dot">⚛️</div>
+              <div class="milestone-label">Beginner</div>
+              <div class="milestone-certs">0 Certs</div>
+            </div>
+            
+            <!-- Explorer (1 Cert) -->
+            <div class="milestone-node" data-certs="1" id="milestone-explorer">
+              <div class="milestone-dot">🚀</div>
+              <div class="milestone-label">Explorer</div>
+              <div class="milestone-certs">1 Cert</div>
+            </div>
+            
+            <!-- Scientist (3 Certs) -->
+            <div class="milestone-node" data-certs="3" id="milestone-scientist">
+              <div class="milestone-dot">🧪</div>
+              <div class="milestone-label">Scientist</div>
+              <div class="milestone-certs">3 Certs</div>
+            </div>
+            
+            <!-- Atomic Master (5 Certs) -->
+            <div class="milestone-node" data-certs="5" id="milestone-atomic-master">
+              <div class="milestone-dot">🔋</div>
+              <div class="milestone-label">Atomic Master</div>
+              <div class="milestone-certs">5 Certs</div>
+            </div>
+            
+            <!-- Quantum Legend (10 Certs) -->
+            <div class="milestone-node" data-certs="10" id="milestone-quantum-legend">
+              <div class="milestone-dot">👑</div>
+              <div class="milestone-label">Quantum Legend</div>
+              <div class="milestone-certs">10 Certs</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="rank-banner-info">
+          <div>Next Milestone Rank: <span class="next-rank-highlight" id="nextRankText">Explorer</span></div>
+          <div id="certsRemainingText">1 certificate remaining</div>
+        </div>
+      </section>
+
+      <!-- Statistics Dashboard -->
+      <section class="stats-grid" aria-labelledby="statsTitle">
+        <h2 class="section-title" id="statsTitle" style="display:none;">Statistics Dashboard</h2>
+        
+        <!-- Certificates Card -->
+        <div class="stat-card" id="statCardCerts">
+          <div class="stat-icon" aria-hidden="true">📜</div>
+          <div class="stat-details">
+            <span class="stat-label">Certificates</span>
+            <span class="stat-value" id="statCertsCount">0</span>
+          </div>
+        </div>
+        
+        <!-- Highest Score Card -->
+        <div class="stat-card" id="statCardScore">
+          <div class="stat-icon" aria-hidden="true">🔥</div>
+          <div class="stat-details">
+            <span class="stat-label">Highest Score</span>
+            <span class="stat-value" id="statHighestScore">0%</span>
+          </div>
+        </div>
+        
+        <!-- Quizzes Completed Card -->
+        <div class="stat-card" id="statCardQuizzes">
+          <div class="stat-icon" aria-hidden="true">⚡</div>
+          <div class="stat-details">
+            <span class="stat-label">Quizzes Completed</span>
+            <span class="stat-value" id="statQuizzesCount">0</span>
+          </div>
+        </div>
+        
+        <!-- Current Rank Card -->
+        <div class="stat-card" id="statCardRank">
+          <div class="stat-icon" aria-hidden="true">🏆</div>
+          <div class="stat-details">
+            <span class="stat-label">Current Rank</span>
+            <span class="stat-value" id="statCurrentRankName" style="font-size: 1.15rem; font-weight: 700; margin-top: 6px;">Beginner</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Dynamic View Wrapper -->
+      <div class="dashboard-view-wrapper">
+        
+        <!-- State 1: Empty State Experience -->
+        <section class="glass-panel empty-state" id="emptyStateSection">
+          <div class="empty-icon-container">
+            <div class="empty-orbital-1"></div>
+            <div class="empty-orbital-2"></div>
+            <div class="empty-center-icon">🏆</div>
+          </div>
+          <h3>No Certificates Yet</h3>
+          <p>Complete a quiz and score 70% or higher to unlock your first certificate and begin your achievement journey.</p>
+          <button class="btn-primary" id="emptyStateBtn">
+            <span>Take Quiz</span> 🚀
+          </button>
+        </section>
+
+        <!-- State 2: Active Achievements Vault -->
+        <div class="active-state" id="activeStateSection" style="display: none;">
+          
+          <!-- Featured Achievement -->
+          <section class="featured-achievement" aria-labelledby="featuredTitle">
+            <div class="featured-decoration"></div>
+            <div class="featured-info">
+              <div class="featured-badge-tag">
+                <span>⭐</span> Highest Achievement
+              </div>
+              <h3 class="featured-title" id="featuredCertName">Quantum Mechanics Quiz</h3>
+              <div class="featured-metadata">
+                <span>Score: <strong id="featuredCertScore">95%</strong></span>
+                <span>Date: <strong id="featuredCertDate">June 11, 2026</strong></span>
+              </div>
+              <button class="featured-card-btn" id="featuredCertViewBtn">Quick View Certificate</button>
+            </div>
+            <div class="featured-preview-container">
+              <div class="featured-badge-glow"></div>
+              <div class="featured-badge-icon" style="font-size: 4rem;">🏆</div>
+            </div>
+          </section>
+
+          <!-- Recent Certificates Grid -->
+          <section aria-labelledby="certsListTitle">
+            <h3 class="section-title" id="certsListTitle">📜 Recent Certificates</h3>
+            <div class="certs-grid" id="certsListGrid">
+              <!-- JS-generated certificate cards appear here -->
+            </div>
+          </section>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Right Column: Badges & Timeline -->
+    <div class="dashboard-right-panel">
+      
+      <!-- Achievement Badges -->
+      <section class="glass-panel badges-container" aria-labelledby="badgesTitle">
+        <h2 class="section-title" id="badgesTitle">🏅 Achievement Badges</h2>
+        <div class="badges-grid" id="badgesGridContainer">
+          
+          <!-- Badge 1: First Quiz Completed -->
+          <div class="badge-item locked" id="badge-first-quiz" title="Complete your first quiz to unlock this badge.">
+            <span class="badge-icon">🏅</span>
+            <span class="badge-name">First Step</span>
+            <div class="badge-tooltip-content">First Quiz Completed</div>
+          </div>
+          
+          <!-- Badge 2: Quiz Explorer -->
+          <div class="badge-item locked" id="badge-quiz-explorer" title="Complete 3 quizzes on the platform.">
+            <span class="badge-icon">🚀</span>
+            <span class="badge-name">Quiz Explorer</span>
+            <div class="badge-tooltip-content">Complete 3 Quizzes</div>
+          </div>
+          
+          <!-- Badge 3: Scored Above 90% -->
+          <div class="badge-item locked" id="badge-score-90" title="Achieve a score of 90% or higher on any quiz.">
+            <span class="badge-icon">🔥</span>
+            <span class="badge-name">High Flyer</span>
+            <div class="badge-tooltip-content">Scored Above 90%</div>
+          </div>
+          
+          <!-- Badge 4: Hard Mode Master -->
+          <div class="badge-item locked" id="badge-hard-master" title="Pass a Hard difficulty quiz with 70% or more.">
+            <span class="badge-icon">⚛️</span>
+            <span class="badge-name">Hard Master</span>
+            <div class="badge-tooltip-content">Hard Mode Master</div>
+          </div>
+          
+          <!-- Badge 5: Perfect Score -->
+          <div class="badge-item locked" id="badge-perfect-score" title="Achieve an absolute 100% score on any quiz.">
+            <span class="badge-icon">👑</span>
+            <span class="badge-name">Absolute Gen</span>
+            <div class="badge-tooltip-content">Perfect Score (100%)</div>
+          </div>
+          
+        </div>
+      </section>
+
+      <!-- Achievement Timeline -->
+      <section class="glass-panel timeline-container" aria-labelledby="timelineTitle">
+        <h2 class="section-title" id="timelineTitle">📈 Achievement Timeline</h2>
+        <div class="timeline-list" id="timelineListContainer">
+          <!-- JS-generated timeline nodes go here -->
+        </div>
+      </section>
+
+    </div>
+
+  </main>
+
+  <!-- Interactive Certificate Viewer Dialog (Overlay Modal) -->
+  <div class="modal-overlay" id="certModalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalCertTitle">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalCertTitle">Certificate Details</h3>
+        <button class="modal-close" id="closeCertModal" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        
+        <!-- Official Certificate Frame -->
+        <div class="certificate-frame" id="certificateFrame">
+          <div class="cert-platform-header">ATOM UNIVERSE <span>ACADEMY</span></div>
+          <h2 class="cert-main-title">Certificate of Achievement</h2>
+          <p class="cert-text-present">This credential is proudly presented to</p>
+          <div class="cert-recipient-name" id="certRecipientName">
+  Student
+</div>
+          <p class="cert-reason">
+            for outstanding performance in completing the quiz <br>
+            <strong class="cert-subject-highlight" id="certSubjectName">Quantum Mechanics Theory</strong><br>
+            with a score of <strong id="certDisplayScore">95%</strong> on <span id="certDisplayDate">June 11, 2026</span>.
+          </p>
+          
+          <div class="cert-info-row">
+            <div class="cert-col">
+              <div class="cert-signature-line" id="certSigInstruct">Dr. Marie Curie</div>
+              <div class="cert-col-label">Dean of Science</div>
+            </div>
+            
+            <div class="cert-col">
+              <div class="cert-seal-glow">
+                <div class="cert-seal-inner">⚛️</div>
+              </div>
+            </div>
+            
+            <div class="cert-col">
+              <div class="cert-signature-line" id="certSigPlatform">Albert Einstein</div>
+              <div class="cert-col-label">Lead Quantum Architect</div>
+            </div>
+          </div>
+          
+          <div class="cert-footer-meta">
+            <span>Certificate ID: <strong id="certDisplayId">AU-CERT-QM-847293</strong></span>
+            <span>Verify at: <strong>atom-universe.org/verify</strong></span>
+          </div>
+        </div>
+        
+      </div>
+      <div class="modal-footer">
+        <button class="sim-btn-outline" id="printCertBtn">Print / Download PDF</button>
+        <button class="sim-btn" id="modalCloseBtn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interactive DevTools Simulator Trigger Button -->
+  <button class="simulator-trigger" id="simTrigger" title="Open Simulation Controls" aria-label="Open Simulation Controls">🛠️</button>
+
+  <!-- Collapsible Simulator Panel -->
+  <div class="simulator-panel" id="simPanel">
+    <div class="sim-header">
+      <h4>🛠️ Achievement Simulator</h4>
+      <button class="sim-close" id="simClose">&times;</button>
+    </div>
+    <div class="sim-body">
+      
+      <!-- Section 1: Toggle State -->
+      <div class="sim-section">
+        <span class="sim-label">Dashboard View</span>
+        <div class="sim-row">
+          <button class="sim-btn-outline" id="simToggleEmpty">Force Empty State</button>
+          <button class="sim-btn" id="simLoadMock">Load Mock Data</button>
+        </div>
+      </div>
+      
+      <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.08);">
+
+      <!-- Section 2: Simulate Quiz Completion -->
+      <div class="sim-section">
+        <span class="sim-label">Simulate Quiz Pass</span>
+        
+        <div style="display:flex; flex-direction:column; gap:0.5rem;">
+          <input type="text" class="sim-input" id="simQuizTitle" placeholder="e.g. Molecular Physics" value="Molecular Physics">
+          
+          <div class="sim-row">
+            <select class="sim-select" id="simQuizDifficulty">
+              <option value="easy">Easy</option>
+              <option value="moderate" selected>Moderate</option>
+              <option value="hard">Hard</option>
+            </select>
+            <div style="display:flex; align-items:center; gap:0.25rem;">
+              <input type="range" id="simQuizScore" min="0" max="100" value="85" style="width:100%; accent-color: var(--secondary);">
+              <span id="simScoreLabel" style="font-size:0.85rem; font-weight:bold; min-width:32px;">85%</span>
+            </div>
+          </div>
+          
+          <button class="sim-btn" id="simAddCertBtn" style="background: linear-gradient(135deg, var(--primary), var(--secondary));">
+            Unlock Certificate & Check stats
+          </button>
+        </div>
+      </div>
+      
+      <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.08);">
+      
+      <!-- Section 3: Reset Panel -->
+      <div class="sim-section">
+        <span class="sim-label">Dangerous Zone</span>
+        <button class="sim-btn-danger" id="simClearData">Clear Cache & Reset</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Javascript Core Logic -->
+  <script src="app.js"></script>
+</body>
+</html>

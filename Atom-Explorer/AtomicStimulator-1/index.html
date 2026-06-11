@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Atomic Simulator</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header class="site-header">
+
+<div>
+
+<h1>Atomic Simulator</h1>
+
+<p id="currentDifficulty"
+class="subtitle">
+Loading...
+</p>
+
+</div>
+
+</header>
+
+    <main class="app-shell">
+        <section class="slide-shell" aria-label="Atomic level slides">
+            <div class="slide-viewport">
+                <div class="slide-track">
+                    <section class="slide active" id="easy" data-level="easy">
+                        <div class="slide-copy">
+                            <h2>Easy Level</h2>
+                            <p class="feature-line">Simple atom model with a visible nucleus and one electron orbit.</p>
+                            <div class="info-list">
+                                <h3>Information Displayed</h3>
+                                <div class="info-block">
+                                    <strong>Electron</strong>
+                                    <p>Charge: Negative (-)</p>
+                                    <p>Found around the nucleus. Very small particle. Helps in chemical bonding.</p>
+                                    <p>Extra: Electrons determine chemical behavior and participate in bond formation.</p>
+                                </div>
+                                <div class="info-block">
+                                    <strong>Proton</strong>
+                                    <p>Charge: Positive (+)</p>
+                                    <p>Found inside the nucleus. Determines the atomic number of an element.</p>
+                                    <p>Extra: Protons contribute to an element's identity and overall charge balance.</p>
+                                </div>
+                                <div class="info-block">
+                                    <strong>Neutron</strong>
+                                    <p>Charge: Neutral (0)</p>
+                                    <p>Found inside the nucleus. Helps stabilize the nucleus.</p>
+                                    <p>Extra: Neutrons affect isotope formation and nuclear stability.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sim-container">
+                            <div class="atom">
+                                <div class="nucleus">
+                                    <div class="particle proton" data-particle="proton" title="Proton"></div>
+                                    <div class="particle neutron" data-particle="neutron" title="Neutron"></div>
+                                    <div class="nucleus-label">Nucleus</div>
+                                </div>
+                                <div class="orbit orbit-1 rotate-medium">
+                                    <div class="particle electron electron-spin" data-particle="electron" title="Electron"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="slide" id="medium" data-level="medium">
+                        <div class="slide-copy">
+                            <h2>Medium Level</h2>
+                            <p class="feature-line">Multiple electron shells, continuous orbit motion, and particle details.</p>
+                            <div class="info-list">
+                                <h3>Information Displayed</h3>
+                                <div class="info-block">
+                                    <strong>Electron</strong>
+                                    <p>Negative charge (-1). Occupies energy levels or shells.</p>
+                                    <p>Responsible for electricity and chemical reactions.</p>
+                                    <p>Extra: Electrons fill shells following rules that determine bonding patterns.</p>
+                                </div>
+                                <div class="info-block">
+                                    <strong>Proton</strong>
+                                    <p>Positive charge (+1). Located in the nucleus.</p>
+                                    <p>Determines the identity of an element.</p>
+                                    <p>Extra: Proton count (atomic number) is used to place elements in the periodic table.</p>
+                                </div>
+                                <div class="info-block">
+                                    <strong>Neutron</strong>
+                                    <p>No charge (0). Adds mass to the atom.</p>
+                                    <p>Different numbers of neutrons create isotopes.</p>
+                                    <p>Extra: Isotopes can be stable or radioactive depending on neutron/proton balance.</p>
+                                </div>
+
+                                <h4>Additional Topics</h4>
+                                <ul>
+                                    <li>Atomic Number</li>
+                                    <li>Mass Number</li>
+                                    <li>Electron Shells</li>
+                                    <li>Energy Levels</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="sim-container">
+                            <div class="atom medium-atom">
+                                <div class="nucleus">
+                                    <div class="particle proton" data-particle="proton" title="Proton"></div>
+                                    <div class="particle proton" data-particle="proton" title="Proton"></div>
+                                    <div class="particle neutron" data-particle="neutron" title="Neutron"></div>
+                                    <div class="nucleus-label">Nucleus</div>
+                                </div>
+                                <div class="orbit orbit-1 rotate-fast">
+                                    <div class="particle electron electron-spin" data-particle="electron" title="Electron"></div>
+                                    <div class="particle electron electron-spin" data-particle="electron" title="Electron"></div>
+                                </div>
+                                <div class="orbit orbit-2 rotate-slow">
+                                    <div class="particle electron electron-spin" data-particle="electron" title="Electron"></div>
+                                    <div class="particle electron electron-spin" data-particle="electron" title="Electron"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="slide" id="hard" data-level="hard">
+                        <div class="slide-copy">
+                            <h2>Hard Level</h2>
+                            <p class="feature-line">Advanced 3D-style visualization, quantum concepts, and real-world atomic details.</p>
+                            <div class="info-list">
+                                <h3>Information Displayed</h3>
+                                <div class="info-block">
+                                    <strong>Electron</strong>
+                                    <p>Fundamental subatomic particle. Charge: -1.602 × 10⁻¹⁹ C.</p>
+                                    <p>Exists in probability clouds around the nucleus and participates in chemical bonding and electricity.</p>
+                                    <p>Extra: Electron behavior is described by quantum mechanics and wavefunctions.</p>
+                                </div>
+                                <div class="info-block">
+                                    <strong>Proton</strong>
+                                    <p>Charge: +1.602 × 10⁻¹⁹ C. Determines atomic number.</p>
+                                    <p>Made of quarks bound by the strong nuclear force.</p>
+                                    <p>Extra: Proton structure and interactions are studied in particle physics.</p>
+                                </div>
+                                <div class="info-block">
+                                    <strong>Neutron</strong>
+                                    <p>Neutral charge. Slightly heavier than a proton.</p>
+                                    <p>Important for nuclear stability and radioactive processes.</p>
+                                    <p>Extra: Neutrons play a key role in nuclear reactions and isotope behavior.</p>
+                                </div>
+
+                                <h4>Advanced Topics</h4>
+                                <ul>
+                                    <li>Atomic Structure</li>
+                                    <li>Electron Configuration</li>
+                                    <li>Isotopes</li>
+                                    <li>Nuclear Forces</li>
+                                    <li>Quantum Model of the Atom</li>
+                                    <li>Radioactivity</li>
+                                    <li>Atomic Energy</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="sim-container">
+                            <div class="atom hard-atom">
+                                <div class="nucleus">
+                                    <div class="particle proton" data-particle="proton" title="Proton"></div>
+                                    <div class="particle proton" data-particle="proton" title="Proton"></div>
+                                    <div class="particle neutron" data-particle="neutron" title="Neutron"></div>
+                                    <div class="particle neutron" data-particle="neutron" title="Neutron"></div>
+                                    <div class="nucleus-label">Nucleus</div>
+                                </div>
+                                <div class="orbit orbit-1 rotate-fast">
+                                    <div class="particle electron electron-spin" data-particle="electron" title="Electron"></div>
+                                    <div class="particle electron electron-spin" data-particle="electron" title="Electron"></div>
+                                    <div class="particle electron electron-spin" data-particle="electron" title="Electron"></div>
+                                </div>
+                                <div class="orbit orbit-2 rotate-medium">
+                                    <div class="particle electron electron-spin" data-particle="electron" title="Electron"></div>
+                                </div>
+                                <div class="orbit orbit-3 rotate-slow">
+                                    <div class="particle electron electron-spin" data-particle="electron" title="Electron"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            
+        </section>
+
+        <aside id="info-panel" class="info-panel" aria-hidden="true">
+            <button id="close-info" class="close-btn" aria-label="Close">×</button>
+            <div id="info-content"></div>
+        </aside>
+    </main>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

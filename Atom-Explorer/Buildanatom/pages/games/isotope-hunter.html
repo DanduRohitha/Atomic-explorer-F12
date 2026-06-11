@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+/>
+
+<title>
+Isotope Hunter
+</title>
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap');
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+
+font-family:'Orbitron',sans-serif;
+
+overflow:hidden;
+
+height:100vh;
+
+background:
+linear-gradient(
+180deg,
+#020617,
+#071226,
+#020617
+);
+
+color:white;
+
+position:relative;
+}
+
+/* GRID */
+
+body::before{
+
+content:"";
+
+position:absolute;
+
+inset:0;
+
+background-image:
+
+linear-gradient(
+rgba(0,140,255,.05) 1px,
+transparent 1px
+),
+
+linear-gradient(
+90deg,
+rgba(0,140,255,.05) 1px,
+transparent 1px
+);
+
+background-size:80px 80px;
+
+z-index:-1;
+}
+
+/* TOP */
+
+.top{
+
+width:100%;
+
+padding:28px 35px;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:flex-start;
+}
+
+/* TITLE */
+
+.title h1{
+
+font-size:56px;
+
+font-weight:900;
+
+background:
+linear-gradient(
+90deg,
+#38bdf8,
+#818cf8,
+#22d3ee
+);
+
+-webkit-background-clip:text;
+
+-webkit-text-fill-color:transparent;
+
+text-shadow:
+0 0 25px rgba(56,189,248,.25);
+}
+
+.title p{
+
+margin-top:8px;
+
+font-size:16px;
+
+color:#e2e8f0;
+}
+
+/* STATS */
+
+.stats{
+
+display:flex;
+
+gap:15px;
+}
+
+.stat{
+
+width:135px;
+
+height:135px;
+
+border-radius:28px;
+
+background:
+rgba(255,255,255,.06);
+
+border:
+1px solid rgba(255,255,255,.08);
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+align-items:center;
+
+backdrop-filter:blur(10px);
+}
+
+.stat h3{
+
+font-size:16px;
+
+margin-bottom:12px;
+
+color:#cbd5e1;
+}
+
+.stat p{
+
+font-size:40px;
+
+font-weight:900;
+}
+
+/* QUESTION */
+
+.question{
+
+position:absolute;
+
+top:220px;
+
+left:50%;
+
+transform:translateX(-50%);
+
+width:760px;
+
+padding:24px;
+
+border-radius:34px;
+
+background:
+rgba(255,255,255,.08);
+
+border:
+1px solid rgba(255,255,255,.08);
+
+text-align:center;
+
+font-size:24px;
+
+font-weight:700;
+
+line-height:1.5;
+}
+
+.highlight{
+
+color:#facc15;
+}
+
+/* OPTIONS AREA */
+
+.options{
+
+position:absolute;
+
+bottom:40px;
+
+left:50%;
+
+transform:translateX(-50%);
+
+display:flex;
+
+gap:22px;
+}
+
+/* ISOTOPE CARD */
+
+.isotope{
+
+width:140px;
+
+height:140px;
+
+border-radius:28px;
+
+background:
+linear-gradient(
+180deg,
+#1e293b,
+#0f172a
+);
+
+border:
+2px solid rgba(255,255,255,.08);
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+align-items:center;
+
+cursor:pointer;
+
+transition:.25s;
+
+box-shadow:
+0 0 20px rgba(0,0,0,.4);
+}
+
+.isotope:hover{
+
+transform:
+translateY(-8px)
+scale(1.03);
+
+box-shadow:
+0 0 20px rgba(56,189,248,.35);
+}
+
+.correct{
+
+background:
+linear-gradient(
+180deg,
+#14532d,
+#166534
+);
+
+box-shadow:
+0 0 25px rgba(34,197,94,.45);
+}
+
+.wrong{
+
+background:
+linear-gradient(
+180deg,
+#7f1d1d,
+#991b1b
+);
+
+box-shadow:
+0 0 25px rgba(239,68,68,.45);
+}
+
+.element{
+
+font-size:16px;
+
+margin-bottom:10px;
+
+text-align:center;
+
+padding:0 8px;
+}
+
+.mass{
+
+font-size:40px;
+
+font-weight:900;
+}
+
+/* FLOAT */
+
+.float{
+
+position:absolute;
+
+font-size:26px;
+
+font-weight:900;
+
+pointer-events:none;
+
+animation:
+floatUp .8s linear forwards;
+}
+
+@keyframes floatUp{
+
+from{
+
+opacity:1;
+
+transform:
+translateY(0);
+
+}
+
+to{
+
+opacity:0;
+
+transform:
+translateY(-50px);
+
+}
+
+}
+
+/* POPUP */
+
+.popup{
+
+position:fixed;
+
+inset:0;
+
+background:
+rgba(0,0,0,.75);
+
+display:none;
+
+justify-content:center;
+
+align-items:center;
+
+z-index:999;
+}
+
+.popup-box{
+
+width:400px;
+
+padding:35px;
+
+border-radius:30px;
+
+background:
+#0f172a;
+
+text-align:center;
+
+border:
+1px solid rgba(255,255,255,.08);
+}
+
+.popup-box h1{
+
+font-size:38px;
+
+margin-bottom:20px;
+}
+
+.popup-box p{
+
+font-size:22px;
+
+margin-bottom:25px;
+}
+
+.popup-box button{
+
+padding:14px 32px;
+
+border:none;
+
+border-radius:18px;
+
+font-size:16px;
+
+font-weight:700;
+
+cursor:pointer;
+
+background:
+linear-gradient(
+135deg,
+#2563eb,
+#06b6d4
+);
+
+color:white;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+.title h1{
+font-size:34px;
+}
+
+.title p{
+font-size:12px;
+}
+
+.stat{
+width:90px;
+height:90px;
+}
+
+.stat h3{
+font-size:11px;
+}
+
+.stat p{
+font-size:26px;
+}
+
+.question{
+
+width:92%;
+font-size:16px;
+padding:18px;
+top:180px;
+}
+
+.options{
+
+gap:10px;
+bottom:20px;
+}
+
+.isotope{
+
+width:80px;
+height:90px;
+border-radius:18px;
+}
+
+.element{
+font-size:10px;
+}
+
+.mass{
+font-size:22px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="top">
+
+<div class="title">
+
+<h1>
+Isotope Hunter
+</h1>
+
+<p>
+Choose the correct isotope
+</p>
+
+</div>
+
+<div class="stats">
+
+<div class="stat">
+
+<h3>
+Score
+</h3>
+
+<p id="score">
+0
+</p>
+
+</div>
+
+<div class="stat">
+
+<h3>
+Target
+</h3>
+
+<p>
+100
+</p>
+
+</div>
+
+<div class="stat">
+
+<h3>
+Time
+</h3>
+
+<p id="time">
+40
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- QUESTION -->
+
+<div
+class="question"
+id="question"
+>
+
+Loading...
+
+</div>
+
+<!-- OPTIONS -->
+
+<div
+class="options"
+id="options"
+></div>
+
+<!-- POPUP -->
+
+<div
+class="popup"
+id="popup"
+>
+
+<div class="popup-box">
+
+<h1 id="resultTitle">
+🏆 YOU WON
+</h1>
+
+<p id="resultText">
+Final Score: 0
+</p>
+
+<button onclick="location.reload()">
+Play Again
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+/* ELEMENTS */
+
+const question =
+document.getElementById("question");
+
+const options =
+document.getElementById("options");
+
+const scoreText =
+document.getElementById("score");
+
+const timeText =
+document.getElementById("time");
+
+const popup =
+document.getElementById("popup");
+
+const resultTitle =
+document.getElementById("resultTitle");
+
+const resultText =
+document.getElementById("resultText");
+
+/* DATA */
+
+const isotopes = [
+
+{
+name:"Hydrogen",
+protons:1,
+neutrons:0,
+mass:1
+},
+
+{
+name:"Carbon",
+protons:6,
+neutrons:6,
+mass:12
+},
+
+{
+name:"Oxygen",
+protons:8,
+neutrons:8,
+mass:16
+},
+
+{
+name:"Neon",
+protons:10,
+neutrons:10,
+mass:20
+},
+
+{
+name:"Uranium",
+protons:92,
+neutrons:146,
+mass:238
+},
+
+{
+name:"Helium",
+protons:2,
+neutrons:2,
+mass:4
+},
+
+{
+name:"Lithium",
+protons:3,
+neutrons:4,
+mass:7
+},
+
+{
+name:"Boron",
+protons:5,
+neutrons:6,
+mass:11
+}
+
+];
+
+/* VALUES */
+
+let score = 0;
+let time = 40;
+let current;
+
+/* SHUFFLE */
+
+function shuffle(arr){
+
+return arr.sort(
+()=> Math.random() - .5
+);
+
+}
+
+/* LOAD QUESTION */
+
+function loadQuestion(){
+
+options.innerHTML = "";
+
+current = isotopes[
+Math.floor(
+Math.random() * isotopes.length
+)
+];
+
+question.innerHTML =
+
+`Find isotope with:
+<span class="highlight">
+${current.protons} Protons
+&
+${current.neutrons} Neutrons
+</span>`;
+
+/* OPTIONS */
+
+let choices = shuffle(
+[...isotopes]
+).slice(0,4);
+
+/* FORCE CORRECT */
+
+if(
+!choices.includes(current)
+){
+
+choices[
+Math.floor(Math.random()*4)
+] = current;
+
+}
+
+choices = shuffle(choices);
+
+/* CREATE CARDS */
+
+choices.forEach(item=>{
+
+const card =
+document.createElement("div");
+
+card.classList.add(
+"isotope"
+);
+
+card.innerHTML =
+
+`
+<div class="element">
+${item.name}
+</div>
+
+<div class="mass">
+${item.mass}
+</div>
+`;
+
+card.onclick = ()=>{
+
+if(item === current){
+
+score += 10;
+
+card.classList.add(
+"correct"
+);
+
+showFloat(
+"+10",
+"#22c55e"
+);
+
+}
+
+else{
+
+score -= 5;
+
+card.classList.add(
+"wrong"
+);
+
+showFloat(
+"-5",
+"#ef4444"
+);
+
+}
+
+scoreText.innerText =
+score;
+
+setTimeout(()=>{
+
+loadQuestion();
+
+},500);
+
+/* WIN */
+
+if(score >= 100){
+
+endGame(true);
+
+}
+
+};
+
+options.appendChild(card);
+
+});
+
+}
+
+/* FLOAT */
+
+function showFloat(
+text,
+color
+){
+
+const float =
+document.createElement("div");
+
+float.classList.add(
+"float"
+);
+
+float.innerText =
+text;
+
+float.style.color =
+color;
+
+float.style.left =
+(window.innerWidth / 2 - 30)
++ "px";
+
+float.style.top =
+"390px";
+
+document.body.appendChild(
+float
+);
+
+setTimeout(()=>{
+
+float.remove();
+
+},800);
+
+}
+
+/* TIMER */
+
+const timer =
+setInterval(()=>{
+
+time--;
+
+timeText.innerText =
+time;
+
+if(time <= 0){
+
+endGame(false);
+
+}
+
+},1000);
+
+/* END GAME */
+
+function endGame(win){
+
+clearInterval(timer);
+
+popup.style.display =
+"flex";
+
+if(win){
+
+resultTitle.innerText =
+"🏆 YOU WON";
+
+}
+
+else{
+
+resultTitle.innerText =
+"❌ GAME OVER";
+
+}
+
+resultText.innerText =
+"Final Score: " + score;
+
+}
+
+/* START */
+
+loadQuestion();
+
+</script>
+
+</body>
+
+</html>

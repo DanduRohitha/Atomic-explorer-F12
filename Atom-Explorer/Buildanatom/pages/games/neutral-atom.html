@@ -1,0 +1,855 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Build Neutral Atom</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+
+overflow:hidden;
+
+font-family:Arial,sans-serif;
+
+background:
+radial-gradient(circle at top,
+#091540,
+#020617);
+
+color:white;
+
+height:100vh;
+
+position:relative;
+}
+
+/* STARS */
+
+body::before{
+
+content:"";
+
+position:fixed;
+
+inset:0;
+
+background-image:
+radial-gradient(white 1px,transparent 1px);
+
+background-size:90px 90px;
+
+opacity:.10;
+
+animation:
+stars 180s linear infinite;
+}
+
+@keyframes stars{
+
+from{
+transform:translateY(0);
+}
+
+to{
+transform:translateY(-250px);
+}
+
+}
+
+/* TOP */
+
+.top-bar{
+
+position:absolute;
+
+top:0;
+
+left:0;
+
+width:100%;
+
+padding:22px 30px;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+z-index:100;
+}
+
+.title{
+
+font-size:28px;
+
+font-weight:900;
+
+text-shadow:
+0 0 20px rgba(99,102,241,.8);
+
+display:flex;
+
+flex-direction:column;
+
+gap:4px;
+}
+
+.title span{
+
+font-size:14px;
+
+font-weight:400;
+
+opacity:.8;
+}
+
+/* STATS */
+
+.stats{
+
+display:flex;
+
+gap:14px;
+}
+
+.stat-box{
+
+width:110px;
+
+background:
+rgba(255,255,255,.07);
+
+border:
+1px solid rgba(255,255,255,.08);
+
+border-radius:18px;
+
+padding:12px;
+
+text-align:center;
+
+backdrop-filter:blur(10px);
+}
+
+.stat-box h3{
+
+font-size:14px;
+
+opacity:.7;
+
+margin-bottom:6px;
+}
+
+.stat-box p{
+
+font-size:28px;
+
+font-weight:900;
+}
+
+/* CENTER ATOM */
+
+.atom-core{
+
+position:absolute;
+
+left:50%;
+
+top:58%;
+
+transform:translate(-50%,-50%);
+
+width:130px;
+
+height:130px;
+
+border-radius:50%;
+
+background:
+radial-gradient(circle,
+#ff4d9d,
+#7c3aed);
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+flex-direction:column;
+
+box-shadow:
+0 0 60px rgba(99,102,241,.6);
+
+z-index:10;
+}
+
+.atom-core h1{
+
+font-size:30px;
+
+margin-bottom:4px;
+}
+
+.atom-core p{
+
+font-size:15px;
+}
+
+/* PARTICLES */
+
+.particle{
+
+width:58px;
+
+height:58px;
+
+border-radius:50%;
+
+position:absolute;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+font-size:30px;
+
+font-weight:900;
+
+cursor:pointer;
+
+user-select:none;
+
+z-index:20;
+
+transition:transform .08s;
+}
+
+.particle:hover{
+
+transform:scale(1.08);
+}
+
+.proton{
+
+background:#ff4d4d;
+
+box-shadow:
+0 0 25px #ff4d4d;
+}
+
+.electron{
+
+background:#3b82f6;
+
+box-shadow:
+0 0 25px #3b82f6;
+}
+
+.fake{
+
+background:#a855f7;
+
+box-shadow:
+0 0 25px #a855f7;
+}
+
+/* FLOATING TEXT */
+
+.floating{
+
+position:absolute;
+
+font-size:24px;
+
+font-weight:900;
+
+pointer-events:none;
+
+animation:
+floatUp .8s linear forwards;
+
+z-index:200;
+}
+
+@keyframes floatUp{
+
+from{
+
+opacity:1;
+
+transform:
+translateY(0);
+
+}
+
+to{
+
+opacity:0;
+
+transform:
+translateY(-50px);
+
+}
+
+}
+
+/* POPUP */
+
+.popup{
+
+position:fixed;
+
+inset:0;
+
+background:
+rgba(0,0,0,.7);
+
+display:none;
+
+justify-content:center;
+
+align-items:center;
+
+z-index:500;
+}
+
+.popup-content{
+
+width:420px;
+
+background:
+rgba(17,24,39,.95);
+
+border-radius:28px;
+
+padding:40px;
+
+text-align:center;
+}
+
+.popup-content h1{
+
+font-size:42px;
+
+margin-bottom:18px;
+}
+
+.popup-content h2{
+
+font-size:28px;
+
+margin-bottom:25px;
+}
+
+.popup-content button{
+
+border:none;
+
+padding:15px 35px;
+
+border-radius:18px;
+
+background:
+linear-gradient(
+135deg,
+#2563eb,
+#7c3aed);
+
+color:white;
+
+font-size:18px;
+
+font-weight:700;
+
+cursor:pointer;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="top-bar">
+
+<div class="title">
+
+Build Neutral Atom
+
+<span>
+Catch Equal Protons & Electrons
+</span>
+
+</div>
+
+<div class="stats">
+
+<div class="stat-box">
+
+<h3>Score</h3>
+
+<p id="score">0</p>
+
+</div>
+
+<div class="stat-box">
+
+<h3>Time</h3>
+
+<p id="time">40</p>
+
+</div>
+
+<div class="stat-box">
+
+<h3>Atoms</h3>
+
+<p id="atomCount">0</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="atom-core">
+
+<h1 id="count">0 / 0</h1>
+
+<p>Neutral</p>
+
+</div>
+
+<div class="popup" id="popup">
+
+<div class="popup-content">
+
+<h1>Great Job!</h1>
+
+<h2>
+Final Score:
+<span id="finalScore">0</span>
+</h2>
+
+<button onclick="location.reload()">
+Play Again
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+/* AUDIO */
+
+const clickSound =
+new Audio(
+"https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3"
+);
+
+const wrongSound =
+new Audio(
+"https://assets.mixkit.co/active_storage/sfx/2955/2955-preview.mp3"
+);
+
+const winSound =
+new Audio(
+"https://assets.mixkit.co/active_storage/sfx/2018/2018-preview.mp3"
+);
+
+/* VARIABLES */
+
+let score = 0;
+
+let time = 40;
+
+let protons = 0;
+
+let electrons = 0;
+
+let atomsCreated = 0;
+
+/* ELEMENTS */
+
+const scoreText =
+document.getElementById("score");
+
+const timeText =
+document.getElementById("time");
+
+const countText =
+document.getElementById("count");
+
+const atomCount =
+document.getElementById("atomCount");
+
+/* TIMER */
+
+const timer =
+setInterval(()=>{
+
+time--;
+
+timeText.innerText =
+time;
+
+if(time <= 0){
+
+endGame();
+
+}
+
+},1000);
+
+/* CREATE PARTICLE */
+
+function createParticle(type){
+
+const particle =
+document.createElement("div");
+
+particle.classList.add(
+"particle",
+type
+);
+
+particle.innerText =
+
+type === "proton"
+? "+"
+:
+
+type === "electron"
+? "-"
+:
+
+"X";
+
+/* POSITION */
+
+let x =
+Math.random()
+*
+(window.innerWidth - 80);
+
+let y =
+120 +
+Math.random()
+*
+(window.innerHeight - 220);
+
+particle.style.left =
+x + "px";
+
+particle.style.top =
+y + "px";
+
+document.body.appendChild(
+particle
+);
+
+/* SPEED */
+
+let progress =
+(40 - time) / 40;
+
+/*
+
+starts slow
+ends medium fast
+
+*/
+
+let speed =
+0.7 +
+(progress * 2);
+
+let dx =
+((Math.random()*0.7)+0.4)
+* speed;
+
+let dy =
+((Math.random()*0.7)+0.4)
+* speed;
+
+if(Math.random() > .5){
+
+dx *= -1;
+
+}
+
+if(Math.random() > .5){
+
+dy *= -1;
+
+}
+
+/* MOVE */
+
+const move =
+setInterval(()=>{
+
+x += dx;
+
+y += dy;
+
+if(
+x <= 0 ||
+x >= window.innerWidth - 60
+){
+
+dx *= -1;
+
+}
+
+if(
+y <= 100 ||
+y >= window.innerHeight - 60
+){
+
+dy *= -1;
+
+}
+
+particle.style.left =
+x + "px";
+
+particle.style.top =
+y + "px";
+
+},28);
+
+/* CLICK */
+
+function handleParticle(){
+
+navigator.vibrate?.(40);
+
+if(type === "proton"){
+
+protons++;
+
+score += 10;
+
+clickSound.currentTime = 0;
+
+clickSound.play();
+
+showFloating(
+"+10",
+x,
+y
+);
+
+}
+
+else if(type === "electron"){
+
+electrons++;
+
+score += 10;
+
+clickSound.currentTime = 0;
+
+clickSound.play();
+
+showFloating(
+"+10",
+x,
+y
+);
+
+}
+
+else{
+
+score -= 5;
+
+wrongSound.currentTime = 0;
+
+wrongSound.play();
+
+showFloating(
+"-5",
+x,
+y,
+true
+);
+
+}
+
+scoreText.innerText =
+score;
+
+countText.innerText =
+protons + " / " + electrons;
+
+particle.remove();
+
+clearInterval(move);
+
+checkNeutral();
+
+}
+
+/* CLICK EVENTS */
+
+particle.addEventListener(
+"mousedown",
+handleParticle
+);
+
+particle.addEventListener(
+"touchstart",
+handleParticle
+);
+
+/* REMOVE */
+
+setTimeout(()=>{
+
+particle.remove();
+
+clearInterval(move);
+
+},9000);
+
+}
+
+/* FLOATING TEXT */
+
+function showFloating(
+text,
+x,
+y,
+wrong = false
+){
+
+const float =
+document.createElement("div");
+
+float.classList.add(
+"floating"
+);
+
+float.innerText =
+text;
+
+float.style.left =
+x + "px";
+
+float.style.top =
+y + "px";
+
+float.style.color =
+
+wrong
+? "#ff4d4d"
+: "#22c55e";
+
+document.body.appendChild(
+float
+);
+
+setTimeout(()=>{
+
+float.remove();
+
+},800);
+
+}
+
+/* SPAWN */
+
+setInterval(()=>{
+
+createParticle("proton");
+
+createParticle("electron");
+
+if(Math.random() > .5){
+
+createParticle("fake");
+
+}
+
+},1400);
+
+/* CHECK ATOM */
+
+function checkNeutral(){
+
+if(
+
+protons > 0
+
+&&
+
+electrons > 0
+
+&&
+
+protons === electrons
+
+){
+
+atomsCreated++;
+
+atomCount.innerText =
+atomsCreated;
+
+winSound.currentTime = 0;
+
+winSound.play();
+
+showFloating(
+"Neutral Atom!",
+window.innerWidth / 2,
+window.innerHeight / 2
+);
+
+}
+
+}
+
+/* END */
+
+function endGame(){
+
+clearInterval(timer);
+
+document.getElementById(
+"popup"
+).style.display =
+"flex";
+
+document.getElementById(
+"finalScore"
+).innerText =
+score;
+
+}
+
+</script>
+
+</body>
+</html>
+

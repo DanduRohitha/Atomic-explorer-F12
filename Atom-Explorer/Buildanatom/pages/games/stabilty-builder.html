@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+>
+
+<title>
+Stability Challenge
+</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+
+font-family:Arial,sans-serif;
+
+height:100vh;
+
+overflow:hidden;
+
+background:
+linear-gradient(
+135deg,
+#f6fbff,
+#dff4ff
+);
+
+position:relative;
+}
+
+/* BACKGROUND */
+
+body::before{
+
+content:"";
+
+position:absolute;
+
+inset:0;
+
+background-image:
+
+linear-gradient(
+rgba(0,140,255,.05) 1px,
+transparent 1px
+),
+
+linear-gradient(
+90deg,
+rgba(0,140,255,.05) 1px,
+transparent 1px
+);
+
+background-size:70px 70px;
+
+z-index:-1;
+}
+
+/* TOP */
+
+.top{
+
+width:100%;
+
+padding:20px 30px;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+}
+
+/* TITLE */
+
+.title h1{
+
+font-size:48px;
+
+color:#16a34a;
+
+font-weight:900;
+
+text-shadow:
+0 0 20px rgba(34,197,94,.25);
+}
+
+.title p{
+
+font-size:18px;
+
+margin-top:8px;
+
+color:#374151;
+}
+
+/* STATS */
+
+.stats{
+
+display:flex;
+
+gap:14px;
+}
+
+.card{
+
+width:110px;
+
+padding:16px;
+
+border-radius:22px;
+
+background:
+rgba(255,255,255,.75);
+
+backdrop-filter:blur(12px);
+
+text-align:center;
+
+box-shadow:
+0 8px 25px rgba(0,0,0,.08);
+}
+
+.card h3{
+
+font-size:18px;
+
+color:#6b7280;
+
+margin-bottom:8px;
+}
+
+.card p{
+
+font-size:38px;
+
+font-weight:900;
+
+color:#111827;
+}
+
+/* GAME */
+
+.game{
+
+height:calc(100vh - 120px);
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+align-items:center;
+}
+
+/* REACTOR */
+
+.reactor{
+
+width:150px;
+
+height:150px;
+
+border-radius:50%;
+
+background:
+radial-gradient(
+circle,
+#fb7185,
+#ef4444
+);
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+flex-direction:column;
+
+box-shadow:
+0 0 60px rgba(239,68,68,.35);
+
+margin-bottom:30px;
+
+animation:
+pulse 2s infinite;
+}
+
+@keyframes pulse{
+
+0%{
+transform:scale(1);
+}
+
+50%{
+transform:scale(1.03);
+}
+
+100%{
+transform:scale(1);
+}
+
+}
+
+.core{
+
+width:24px;
+
+height:24px;
+
+border-radius:50%;
+
+background:#111827;
+
+margin-bottom:10px;
+}
+
+.reactor h2{
+
+font-size:20px;
+
+color:white;
+
+font-weight:900;
+}
+
+/* INFO */
+
+.info{
+
+font-size:20px;
+
+font-weight:700;
+
+margin-bottom:25px;
+
+color:#111827;
+
+text-align:center;
+}
+
+.green{
+
+color:#16a34a;
+}
+
+/* BAR */
+
+.bar{
+
+width:60%;
+
+height:34px;
+
+background:
+rgba(255,255,255,.85);
+
+border-radius:50px;
+
+position:relative;
+
+overflow:hidden;
+
+box-shadow:
+inset 0 0 10px rgba(0,0,0,.08);
+}
+
+/* SAFE */
+
+.safe{
+
+position:absolute;
+
+top:0;
+
+left:38%;
+
+width:22%;
+
+height:100%;
+
+background:
+linear-gradient(
+90deg,
+#4ade80,
+#22c55e
+);
+
+box-shadow:
+0 0 20px rgba(34,197,94,.5);
+}
+
+/* POINTER */
+
+.pointer{
+
+position:absolute;
+
+top:-2px;
+
+left:0;
+
+width:28px;
+
+height:38px;
+
+border-radius:8px;
+
+background:white;
+
+box-shadow:
+0 0 14px rgba(255,255,255,.9);
+}
+
+/* BUTTON */
+
+button{
+
+margin-top:28px;
+
+padding:14px 36px;
+
+font-size:20px;
+
+font-weight:900;
+
+border:none;
+
+border-radius:18px;
+
+cursor:pointer;
+
+color:white;
+
+background:
+linear-gradient(
+135deg,
+#22c55e,
+#16a34a
+);
+
+box-shadow:
+0 10px 24px rgba(34,197,94,.25);
+
+transition:.2s;
+}
+
+button:hover{
+
+transform:scale(1.03);
+}
+
+button:active{
+
+transform:scale(.96);
+}
+
+/* POPUP */
+
+.popup{
+
+position:fixed;
+
+inset:0;
+
+background:
+rgba(0,0,0,.45);
+
+display:none;
+
+justify-content:center;
+
+align-items:center;
+
+z-index:999;
+}
+
+.popup-box{
+
+width:320px;
+
+background:white;
+
+padding:30px;
+
+border-radius:24px;
+
+text-align:center;
+
+box-shadow:
+0 10px 40px rgba(0,0,0,.2);
+}
+
+.popup-box h1{
+
+font-size:34px;
+
+margin-bottom:15px;
+}
+
+.popup-box p{
+
+font-size:18px;
+
+margin-bottom:18px;
+
+color:#4b5563;
+}
+
+.popup-box h2{
+
+font-size:24px;
+
+margin-bottom:22px;
+}
+
+.popup-box button{
+
+margin-top:0;
+
+padding:12px 28px;
+
+font-size:18px;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+.title h1{
+
+font-size:34px;
+}
+
+.title p{
+
+font-size:15px;
+}
+
+.stats{
+
+gap:8px;
+}
+
+.card{
+
+width:88px;
+
+padding:12px;
+}
+
+.card p{
+
+font-size:28px;
+}
+
+.bar{
+
+width:85%;
+}
+
+.info{
+
+font-size:16px;
+
+padding:0 12px;
+}
+
+.reactor{
+
+width:130px;
+height:130px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="top">
+
+<div class="title">
+
+<h1>
+Stability Challenge
+</h1>
+
+<p>
+Stop the moving white line inside green zone
+</p>
+
+</div>
+
+<div class="stats">
+
+<div class="card">
+
+<h3>
+Score
+</h3>
+
+<p id="score">
+0
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>
+Time
+</h3>
+
+<p id="time">
+45
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>
+Stable
+</h3>
+
+<p id="stable">
+50
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="game">
+
+<div class="reactor">
+
+<div class="core"></div>
+
+<h2>
+Keep Stable
+</h2>
+
+</div>
+
+<div class="info">
+
+Click
+<span class="green">
+STOP
+</span>
+
+when white line enters green area
+
+</div>
+
+<div class="bar">
+
+<div class="safe"></div>
+
+<div
+class="pointer"
+id="pointer"
+></div>
+
+</div>
+
+<button id="stopBtn">
+
+STOP
+
+</button>
+
+</div>
+
+<!-- POPUP -->
+
+<div
+class="popup"
+id="popup"
+>
+
+<div class="popup-box">
+
+<h1 id="popupTitle">
+GAME OVER
+</h1>
+
+<p id="popupMessage">
+Message
+</p>
+
+<h2>
+
+Final Score:
+<span id="finalScore">
+0
+</span>
+
+</h2>
+
+<button onclick="location.reload()">
+
+Play Again
+
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+/* SOUNDS */
+
+const successSound =
+new Audio(
+"https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3"
+);
+
+const failSound =
+new Audio(
+"https://assets.mixkit.co/active_storage/sfx/2955/2955-preview.mp3"
+);
+
+const winSound =
+new Audio(
+"https://assets.mixkit.co/active_storage/sfx/2018/2018-preview.mp3"
+);
+
+/* ELEMENTS */
+
+const pointer =
+document.getElementById("pointer");
+
+const stopBtn =
+document.getElementById("stopBtn");
+
+const scoreText =
+document.getElementById("score");
+
+const timeText =
+document.getElementById("time");
+
+const stableText =
+document.getElementById("stable");
+
+/* VALUES */
+
+let score = 0;
+
+let time = 45;
+
+let stability = 50;
+
+let target = 100;
+
+let pos = 0;
+
+let dir = 1;
+
+/* REDUCED SPEED */
+
+let speed = 1.2;
+
+let gameOver = false;
+
+/* TIMER */
+
+const timer =
+setInterval(()=>{
+
+time--;
+
+timeText.innerText =
+time;
+
+/* VERY SLOW SPEED INCREASE */
+
+speed += .01;
+
+if(time <= 0){
+
+loseGame();
+
+}
+
+},1000);
+
+/* MOVE POINTER */
+
+function move(){
+
+if(gameOver) return;
+
+pos += speed * dir;
+
+if(pos >= 97){
+
+dir = -1;
+
+}
+
+if(pos <= 0){
+
+dir = 1;
+
+}
+
+pointer.style.left =
+pos + "%";
+
+requestAnimationFrame(move);
+
+}
+
+move();
+
+/* STOP BUTTON */
+
+stopBtn.onclick = ()=>{
+
+if(gameOver) return;
+
+/* SAFE AREA */
+
+const safe =
+
+pos >= 38 &&
+pos <= 60;
+
+/* SUCCESS */
+
+if(safe){
+
+score += 20;
+
+stability += 10;
+
+successSound.currentTime = 0;
+
+successSound.play();
+
+flash("#dcfce7");
+
+}
+
+/* FAIL */
+
+else{
+
+score -= 10;
+
+stability -= 15;
+
+failSound.currentTime = 0;
+
+failSound.play();
+
+flash("#fee2e2");
+
+}
+
+/* UPDATE */
+
+scoreText.innerText =
+score;
+
+stableText.innerText =
+stability;
+
+/* WIN */
+
+if(stability >= target){
+
+winGame();
+
+}
+
+/* LOSE */
+
+if(stability <= 0){
+
+loseGame();
+
+}
+
+};
+
+/* FLASH */
+
+function flash(color){
+
+document.body.style.background =
+color;
+
+setTimeout(()=>{
+
+document.body.style.background =
+"linear-gradient(135deg,#f6fbff,#dff4ff)";
+
+},120);
+
+}
+
+/* WIN */
+
+function winGame(){
+
+gameOver = true;
+
+clearInterval(timer);
+
+winSound.play();
+
+document.getElementById(
+"popup"
+).style.display =
+"flex";
+
+document.getElementById(
+"popupTitle"
+).innerText =
+"🏆 YOU WON!";
+
+document.getElementById(
+"popupMessage"
+).innerText =
+"Atom Stability Reached 100!";
+
+document.getElementById(
+"finalScore"
+).innerText =
+score;
+
+}
+
+/* LOSE */
+
+function loseGame(){
+
+gameOver = true;
+
+clearInterval(timer);
+
+document.getElementById(
+"popup"
+).style.display =
+"flex";
+
+document.getElementById(
+"popupTitle"
+).innerText =
+"❌ YOU LOST!";
+
+document.getElementById(
+"popupMessage"
+).innerText =
+"Failed To Reach Stability 100";
+
+document.getElementById(
+"finalScore"
+).innerText =
+score;
+
+}
+
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atomic Explorer Quiz - Test Your Atomic Physics Knowledge</title>
+  <meta name="description" content="Embark on a journey through atomic structure, quantum mechanics, and nuclear physics. Test your knowledge across Easy, Moderate, and Hard levels.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Decorative background elements -->
+  <div class="glow-bg glow-1"></div>
+  <div class="glow-bg glow-2"></div>
+  <div class="glow-bg glow-3"></div>
+
+  <div class="app-container">
+    <!-- Main Quiz App Card -->
+    <main class="quiz-card" id="main-card">
+      
+      <!-- WELCOME STATE -->
+      <section id="welcome-state" class="state-container active">
+        <div class="header-logo">
+          <div class="atom-icon">
+            <div class="nucleus"></div>
+            <div class="electron-orbit orbit-1"></div>
+            <div class="electron-orbit orbit-2"></div>
+            <div class="electron-orbit orbit-3"></div>
+          </div>
+        </div>
+        <h1 class="main-title">Atomic Explorer Quiz</h1>
+        <p class="subtitle">Expand your knowledge of atomic structures, orbital theories, and quantum mechanics. Choose a difficulty level to begin your exploration.</p>
+        
+       <div class="level-selection">
+
+  <h2 id="difficultyTitle">
+    🟢 Easy Mode Quiz
+  </h2>
+
+  <p class="subtitle">
+    Answer 10 questions and score 70%+
+    to earn your certificate.
+  </p>
+
+<button
+class="btn btn-primary start-btn"
+onclick="startQuiz()">
+🚀 Start Quiz
+</button>
+
+</div>
+
+
+      </section>
+
+      <!-- QUIZ STATE -->
+      <section id="quiz-state" class="state-container">
+        <!-- Top progress bar tracking -->
+        <div class="quiz-header">
+          <div class="quiz-info">
+            <span class="current-level-tag" id="difficulty-indicator">Easy Level</span>
+            <span class="question-counter" id="question-counter">Question 1 of 10</span>
+          </div>
+          <div class="progress-container">
+            <div class="progress-bar" id="progress-bar-fill"></div>
+          </div>
+        </div>
+
+        <div class="question-container">
+          <h2 class="question-text" id="question-text">Loading question...</h2>
+          
+          <div class="options-grid" id="options-container">
+            <!-- Dynamic options will be rendered here -->
+          </div>
+        </div>
+
+        <div class="quiz-footer">
+          <button class="btn btn-secondary" id="btn-prev" onclick="prevQuestion()" disabled>
+            <span class="btn-icon">&larr;</span> Previous
+          </button>
+          <button class="btn btn-primary" id="btn-next" onclick="nextQuestion()">
+            Next <span class="btn-icon">&rarr;</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- RESULTS STATE -->
+      <section id="results-state" class="state-container">
+        <h2 class="section-title">Quiz Completed!</h2>
+        <p class="results-intro">Here are your exploration results:</p>
+
+        <div class="results-display">
+          <!-- Circular Score Graphic -->
+          <div class="score-circle-container">
+            <svg class="score-svg" viewBox="0 0 120 120">
+              <circle class="score-circle-bg" cx="60" cy="60" r="52"></circle>
+              <circle class="score-circle-value" id="score-circle-progress" cx="60" cy="60" r="52" stroke-dasharray="327" stroke-dashoffset="327"></circle>
+            </svg>
+            <div class="score-text-overlay">
+              <span class="score-number" id="result-score">0/10</span>
+              <span class="score-label" id="result-percentage">0%</span>
+            </div>
+          </div>
+
+          <h3 class="performance-title" id="performance-title">Well Done!</h3>
+          <p class="performance-message" id="performance-message">You completed the quiz.</p>
+        </div>
+
+        <!-- Certificate Claim Section (Conditional) -->
+        <div id="certificate-claim-box" class="certificate-claim-box hidden">
+          <div class="claim-icon">&#127891;</div>
+          <h3>Certificate Qualified!</h3>
+          <p>You scored 70% or higher and earned the Atomic Explorer Quiz Completion Certificate.</p>
+          
+          <div class="claim-form">
+            <label for="student-name-input">Enter Your Name for the Certificate:</label>
+            <input type="text" id="student-name-input" placeholder="e.g. Marie Curie" maxlength="50" autocomplete="name">
+            <button class="btn btn-primary btn-claim" id="btn-claim-certificate" onclick="generateAndShowCertificate()">
+              Claim & View Certificate
+            </button>
+          </div>
+        </div>
+
+        <div class="results-footer">
+          <button class="btn btn-secondary" onclick="restartQuiz()">
+            &#8634; Restart Quiz
+          </button>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- CERTIFICATE OVERLAY MODAL -->
+  <div class="modal-overlay" id="certificate-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2>Certificate Preview</h2>
+        <button class="btn-close" onclick="closeCertificateModal()">&times;</button>
+      </div>
+      
+      <div class="modal-body">
+        <!-- Printable Certificate Area -->
+        <div class="certificate-wrapper" id="certificate-print-area">
+          <div class="cert-border-outer">
+            <div class="cert-border-inner">
+              <!-- Background watermark/design -->
+              <div class="cert-watermark">&#9883;</div>
+              
+              <div class="cert-header">
+                <div class="cert-atom-logo">
+                  <div class="cert-atom-nucleus"></div>
+                  <div class="cert-atom-orbit cert-orbit-1"></div>
+                  <div class="cert-atom-orbit cert-orbit-2"></div>
+                </div>
+                <div class="cert-badge">COMPLETION CERTIFICATE</div>
+              </div>
+
+              <h1 class="cert-title">Atomic Explorer</h1>
+              <p class="cert-sub-title">Quiz Completion Certificate</p>
+
+              <p class="cert-recipient-text">This is proudly presented to</p>
+              <h2 class="cert-name" id="cert-student-name">Student Name</h2>
+
+              <p class="cert-description">
+                for demonstrating proficiency and successfully completing the <span class="cert-highlight">Atomic Explorer Quiz</span> at the designated difficulty level.
+              </p>
+
+              <div class="cert-meta-grid">
+                <div class="cert-meta-col">
+                  <span class="cert-meta-label">Selected Level</span>
+                  <span class="cert-meta-value" id="cert-selected-level">Easy Level</span>
+                </div>
+                <div class="cert-meta-col">
+                  <span class="cert-meta-label">Achieved Score</span>
+                  <span class="cert-meta-value" id="cert-achieved-score">90%</span>
+                </div>
+                <div class="cert-meta-col">
+                  <span class="cert-meta-label">Date Completed</span>
+                  <span class="cert-meta-value" id="cert-completion-date">June 10, 2026</span>
+                </div>
+              </div>
+
+              <div class="cert-footer">
+                <div class="cert-signature-line">
+                  <div class="cert-signature-name">Atomic Explorer Committee</div>
+                  <div class="cert-signature-title">Official Examination Board</div>
+                </div>
+                <div class="cert-seal">
+                  <div class="cert-seal-star">&#9733;</div>
+                  <div class="cert-seal-text">VERIFIED</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeCertificateModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="printCertificate()">
+          <span class="btn-icon">&#128438;</span> Print / Save PDF
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+
+<script>
+
+const difficulty =
+localStorage.getItem(
+"quizDifficulty"
+) || "easy";
+
+const title =
+document.getElementById(
+"difficultyTitle"
+);
+
+if(difficulty==="easy"){
+
+title.innerHTML =
+"🟢 Easy Mode Quiz";
+
+}
+else if(difficulty==="moderate"){
+
+title.innerHTML =
+"🔵 Moderate Mode Quiz";
+
+}
+else{
+
+title.innerHTML =
+"🟣 Hard Mode Quiz";
+
+}
+
+</script>
+
+
+</body>
+</html>

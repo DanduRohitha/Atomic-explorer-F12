@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Build Atom</title>
+
+<link
+rel="stylesheet"
+href="../css/build-atom.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- TOP BAR -->
+
+  <div class="top-bar">
+
+    <div class="title-wrapper">
+
+      <div class="title-line"></div>
+
+      <h1>
+         Build An Atom
+      </h1>
+
+      <div class="title-line"></div>
+
+    </div>
+
+    <!-- TEMP TEST BUTTONS -->
+
+    
+
+    </div>
+
+  </div>
+
+  <!-- MAIN -->
+
+  <div class="layout">
+
+    <!-- LEFT -->
+
+    <div class="left-section">
+
+      <!-- CANVAS -->
+
+      <div class="canvas-panel">
+
+        <!-- MODE LABEL -->
+
+        <div id="modeBadge">
+          EASY MODE
+        </div>
+
+        <!-- LABELS -->
+
+        <div class="atom-legend">
+
+          <div class="legend-item">
+            <span class="dot proton-dot"></span>
+            Proton (+)
+          </div>
+
+          <div class="legend-item">
+            <span class="dot neutron-dot"></span>
+            Neutron (N)
+          </div>
+
+          <div class="legend-item">
+            <span class="dot electron-dot"></span>
+            Electron (-)
+          </div>
+
+        </div>
+
+        <canvas id="atomCanvas"></canvas>
+
+      </div>
+
+      <!-- INFO -->
+
+      <div class="side-info-box">
+
+        <div class="info-header">
+
+          <h2>
+            Atom Information
+          </h2>
+
+        </div>
+
+        <div id="infoContent">
+
+          <p class="default-text">
+            Add protons to build atom
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- RIGHT -->
+
+    <div class="panel">
+
+      <div class="controls-header">
+
+        <h2>
+          Controls
+        </h2>
+
+        
+
+      </div>
+
+      <!-- PROTON -->
+
+      <div class="particle-card proton-theme">
+
+        <h3>
+          Proton
+        </h3>
+
+        <div class="particle-controls">
+
+          <button id="addProton">
+            +
+          </button>
+
+          <span id="protonCount">
+            0
+          </span>
+
+          <button id="removeProton">
+            −
+          </button>
+
+        </div>
+
+      </div>
+
+      <!-- NEUTRON -->
+
+      <div class="particle-card neutron-theme">
+
+        <h3>
+          Neutron
+        </h3>
+
+        <div class="particle-controls">
+
+          <button id="addNeutron">
+            +
+          </button>
+
+          <span id="neutronCount">
+            0
+          </span>
+
+          <button id="removeNeutron">
+            −
+          </button>
+
+        </div>
+
+      </div>
+
+      <!-- ELECTRON -->
+
+      <div class="particle-card electron-theme">
+
+        <h3>
+          Electron
+        </h3>
+
+        <div class="particle-controls">
+
+          <button id="addElectron">
+            +
+          </button>
+
+          <span id="electronCount">
+            0
+          </span>
+
+          <button id="removeElectron">
+            −
+          </button>
+
+        </div>
+
+      </div>
+
+      <!-- RESET -->
+
+      <button
+      id="resetAtom"
+      class="reset-btn">
+
+      Reset Atom
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script
+type="module"
+src="../js/main.js">
+</script>
+
+</body>
+
+</html>

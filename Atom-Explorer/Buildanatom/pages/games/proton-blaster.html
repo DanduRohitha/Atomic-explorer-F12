@@ -1,0 +1,1016 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+/>
+
+<title>
+Proton Blaster
+</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+
+font-family:Arial,sans-serif;
+
+overflow:hidden;
+
+height:100vh;
+
+background:
+linear-gradient(
+135deg,
+#dff6ff,
+#c7ecff
+);
+
+cursor:crosshair;
+
+position:relative;
+}
+
+/* GRID */
+
+body::before{
+
+content:"";
+
+position:absolute;
+
+inset:0;
+
+background-image:
+
+linear-gradient(
+rgba(0,140,255,.05) 1px,
+transparent 1px
+),
+
+linear-gradient(
+90deg,
+rgba(0,140,255,.05) 1px,
+transparent 1px
+);
+
+background-size:70px 70px;
+
+z-index:-1;
+}
+
+/* TOP */
+
+.top{
+
+width:100%;
+
+padding:25px 35px;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:flex-start;
+}
+
+/* TITLE */
+
+.title h1{
+
+font-size:64px;
+
+font-weight:900;
+
+color:#2563eb;
+
+text-shadow:
+0 0 20px rgba(37,99,235,.3);
+}
+
+.title p{
+
+margin-top:10px;
+
+font-size:22px;
+
+color:#334155;
+}
+
+/* STATS */
+
+.stats{
+
+display:flex;
+
+gap:15px;
+}
+
+.card{
+
+width:130px;
+
+padding:18px;
+
+border-radius:24px;
+
+background:
+rgba(255,255,255,.75);
+
+backdrop-filter:blur(10px);
+
+text-align:center;
+
+box-shadow:
+0 8px 20px rgba(0,0,0,.08);
+}
+
+.card h3{
+
+font-size:18px;
+
+margin-bottom:10px;
+
+color:#64748b;
+}
+
+.card p{
+
+font-size:42px;
+
+font-weight:900;
+
+color:#0f172a;
+}
+
+/* GAME AREA */
+
+.game{
+
+position:relative;
+
+width:100%;
+
+height:calc(100vh - 130px);
+
+overflow:hidden;
+}
+
+/* PROTON */
+
+.proton{
+
+position:absolute;
+
+width:90px;
+
+height:90px;
+
+border-radius:50%;
+
+background:
+radial-gradient(
+circle,
+#fb7185,
+#ef4444
+);
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+font-size:42px;
+
+font-weight:900;
+
+color:white;
+
+box-shadow:
+0 0 40px rgba(239,68,68,.45);
+
+animation:
+pulse .8s infinite alternate;
+
+user-select:none;
+
+cursor:pointer;
+}
+
+@keyframes pulse{
+
+from{
+transform:scale(1);
+}
+
+to{
+transform:scale(1.08);
+}
+
+}
+
+/* BLASTER */
+
+.blaster{
+
+position:absolute;
+
+bottom:35px;
+
+left:50%;
+
+transform:translateX(-50%);
+
+width:170px;
+
+height:90px;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+transition:.05s linear;
+
+z-index:200;
+}
+
+/* MAIN BODY */
+
+.gun-body{
+
+position:absolute;
+
+width:120px;
+
+height:70px;
+
+border-radius:20px;
+
+background:
+linear-gradient(
+135deg,
+#2563eb,
+#1d4ed8
+);
+
+box-shadow:
+0 0 30px rgba(37,99,235,.4);
+
+border:
+4px solid rgba(255,255,255,.25);
+
+}
+
+/* NOZZLE */
+
+.gun-nozzle{
+
+position:absolute;
+
+right:0;
+
+width:70px;
+
+height:24px;
+
+border-radius:20px;
+
+background:
+linear-gradient(
+90deg,
+#94a3b8,
+#e2e8f0
+);
+
+box-shadow:
+0 0 15px rgba(255,255,255,.5);
+
+}
+
+/* HANDLE */
+
+.gun-body::after{
+
+content:"";
+
+position:absolute;
+
+bottom:-28px;
+
+left:35px;
+
+width:28px;
+
+height:42px;
+
+border-radius:10px;
+
+background:
+linear-gradient(
+135deg,
+#1e293b,
+#334155
+);
+
+transform:rotate(15deg);
+
+}
+
+/* GLOW LIGHT */
+
+.gun-light{
+
+position:absolute;
+
+right:12px;
+
+width:14px;
+
+height:14px;
+
+border-radius:50%;
+
+background:#ef4444;
+
+box-shadow:
+0 0 15px #ef4444;
+
+animation:
+blink .8s infinite alternate;
+
+}
+
+@keyframes blink{
+
+from{
+
+opacity:.4;
+
+}
+
+to{
+
+opacity:1;
+
+}
+
+}
+
+/* LASER */
+
+.laser{
+
+position:absolute;
+
+height:5px;
+
+background:white;
+
+transform-origin:left center;
+
+box-shadow:
+0 0 18px white;
+
+border-radius:20px;
+
+z-index:100;
+}
+
+/* FLOAT SCORE */
+
+.float{
+
+position:absolute;
+
+font-size:34px;
+
+font-weight:900;
+
+color:#16a34a;
+
+pointer-events:none;
+
+animation:
+floatUp .8s linear forwards;
+}
+
+@keyframes floatUp{
+
+from{
+
+opacity:1;
+
+transform:
+translateY(0);
+
+}
+
+to{
+
+opacity:0;
+
+transform:
+translateY(-50px);
+
+}
+
+}
+
+/* MESSAGE */
+
+.message{
+
+position:absolute;
+
+top:50%;
+
+left:50%;
+
+transform:translate(-50%,-50%);
+
+background:white;
+
+padding:40px 55px;
+
+border-radius:35px;
+
+text-align:center;
+
+box-shadow:
+0 20px 50px rgba(0,0,0,.12);
+
+display:none;
+
+z-index:999;
+}
+
+.message h1{
+
+font-size:54px;
+
+margin-bottom:20px;
+
+color:#2563eb;
+}
+
+.message p{
+
+font-size:26px;
+
+margin-bottom:28px;
+
+color:#334155;
+}
+
+.message button{
+
+padding:16px 38px;
+
+border:none;
+
+border-radius:18px;
+
+font-size:22px;
+
+font-weight:900;
+
+cursor:pointer;
+
+background:
+linear-gradient(
+135deg,
+#2563eb,
+#3b82f6
+);
+
+color:white;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+.title h1{
+
+font-size:38px;
+}
+
+.title p{
+
+font-size:16px;
+}
+
+.stats{
+
+gap:8px;
+}
+
+.card{
+
+width:90px;
+padding:12px;
+}
+
+.card p{
+
+font-size:28px;
+}
+
+.proton{
+
+width:65px;
+height:65px;
+font-size:28px;
+}
+
+.blaster{
+
+width:120px;
+height:70px;
+}
+
+.message{
+
+width:280px;
+padding:25px;
+}
+
+.message h1{
+
+font-size:34px;
+}
+
+.message p{
+
+font-size:20px;
+}
+
+.message button{
+
+font-size:18px;
+padding:12px 24px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="top">
+
+<div class="title">
+
+<h1>
+Proton Blaster
+</h1>
+
+<p>
+Aim and blast moving protons
+</p>
+
+</div>
+
+<div class="stats">
+
+<div class="card">
+
+<h3>
+Score
+</h3>
+
+<p id="score">
+0
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>
+Target
+</h3>
+
+<p>
+150
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>
+Time
+</h3>
+
+<p id="time">
+45
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div
+class="game"
+id="game"
+>
+
+<div
+class="proton"
+id="proton"
+>
++
+</div>
+
+<!-- BLASTER -->
+
+<div
+class="blaster"
+id="blaster"
+>
+
+<div class="gun-body"></div>
+
+<div class="gun-nozzle"></div>
+
+<div class="gun-light"></div>
+
+</div>
+
+</div>
+
+<!-- MESSAGE -->
+
+<div
+class="message"
+id="message"
+>
+
+<h1 id="msgTitle">
+YOU WON
+</h1>
+
+<p id="msgText">
+Final Score: 0
+</p>
+
+<button onclick="location.reload()">
+Play Again
+</button>
+
+</div>
+
+<script>
+
+/* ELEMENTS */
+
+const proton =
+document.getElementById("proton");
+
+const scoreText =
+document.getElementById("score");
+
+const timeText =
+document.getElementById("time");
+
+const game =
+document.getElementById("game");
+
+const message =
+document.getElementById("message");
+
+const msgTitle =
+document.getElementById("msgTitle");
+
+const msgText =
+document.getElementById("msgText");
+
+/* VALUES */
+
+let score = 0;
+
+let time = 45;
+
+let speed = 2;
+
+let gameOver = false;
+
+/* PROTON POSITION */
+
+let x = 300;
+let y = 300;
+
+let dx = 2;
+let dy = 2;
+
+/* MOVE PROTON */
+
+function moveProton(){
+
+if(gameOver) return;
+
+x += dx;
+y += dy;
+
+/* WALL COLLISION */
+
+if(x <= 0 || x >= window.innerWidth - 100){
+
+dx *= -1;
+
+}
+
+if(y <= 130 || y >= window.innerHeight - 230){
+
+dy *= -1;
+
+}
+
+/* APPLY POSITION */
+
+proton.style.left =
+x + "px";
+
+proton.style.top =
+y + "px";
+
+/* CONTINUE */
+
+requestAnimationFrame(
+moveProton
+);
+
+}
+
+moveProton();
+
+/* SHOOT */
+
+document.addEventListener(
+"click",
+(e)=>{
+
+if(gameOver) return;
+
+/* GUN POSITION */
+
+const startX =
+window.innerWidth / 2;
+
+const startY =
+window.innerHeight - 90;
+
+/* TARGET */
+
+const targetX =
+e.clientX;
+
+const targetY =
+e.clientY;
+
+/* LASER */
+
+const laser =
+document.createElement("div");
+
+laser.classList.add(
+"laser"
+);
+
+const distance =
+
+Math.hypot(
+targetX - startX,
+targetY - startY
+);
+
+const angle =
+
+Math.atan2(
+targetY - startY,
+targetX - startX
+)
+
+* 180 / Math.PI;
+
+laser.style.width =
+distance + "px";
+
+laser.style.left =
+startX + "px";
+
+laser.style.top =
+startY + "px";
+
+laser.style.transform =
+`rotate(${angle}deg)`;
+
+/* ADD LASER */
+
+game.appendChild(
+laser
+);
+
+/* REMOVE LASER */
+
+setTimeout(()=>{
+
+laser.remove();
+
+},100);
+
+/* HIT DETECTION */
+
+const protonRect =
+proton.getBoundingClientRect();
+
+const hit =
+
+e.clientX >= protonRect.left &&
+e.clientX <= protonRect.right &&
+e.clientY >= protonRect.top &&
+e.clientY <= protonRect.bottom;
+
+/* SUCCESS */
+
+if(hit){
+
+score += 10;
+
+scoreText.innerText =
+score;
+
+/* FLOAT SCORE */
+
+showFloat(
+"+10",
+x,
+y
+);
+
+/* RANDOM NEW POSITION */
+
+x =
+Math.random()
+*
+(window.innerWidth - 150);
+
+y =
+150 +
+Math.random()
+*
+(window.innerHeight - 350);
+
+/* INCREASE SPEED */
+
+speed += 0.18;
+
+dx =
+(dx > 0 ? 1 : -1)
+* speed;
+
+dy =
+(dy > 0 ? 1 : -1)
+* speed;
+
+/* WIN */
+
+if(score >= 150){
+
+winGame();
+
+}
+
+}
+
+});
+
+/* FLOAT SCORE */
+
+function showFloat(
+text,
+x,
+y
+){
+
+const float =
+document.createElement("div");
+
+float.classList.add(
+"float"
+);
+
+float.innerText =
+text;
+
+float.style.left =
+x + "px";
+
+float.style.top =
+y + "px";
+
+game.appendChild(
+float
+);
+
+setTimeout(()=>{
+
+float.remove();
+
+},800);
+
+}
+
+/* TIMER */
+
+const timer =
+setInterval(()=>{
+
+time--;
+
+timeText.innerText =
+time;
+
+if(time <= 0){
+
+endGame();
+
+}
+
+},1000);
+
+/* WIN */
+
+function winGame(){
+
+gameOver = true;
+
+clearInterval(timer);
+
+message.style.display =
+"block";
+
+msgTitle.innerText =
+"🏆 YOU WON";
+
+msgText.innerText =
+"Final Score: " + score;
+
+}
+
+/* END */
+
+function endGame(){
+
+gameOver = true;
+
+clearInterval(timer);
+
+message.style.display =
+"block";
+
+if(score >= 150){
+
+msgTitle.innerText =
+"🏆 YOU WON";
+
+}
+
+else{
+
+msgTitle.innerText =
+"❌ YOU LOST";
+
+}
+
+msgText.innerText =
+"Final Score: " + score;
+
+}
+
+</script>
+
+</body>
+
+</html>
+

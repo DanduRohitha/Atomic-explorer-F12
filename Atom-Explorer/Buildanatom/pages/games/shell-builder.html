@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+>
+
+<title>
+Shell Builder
+</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+
+font-family:Arial,sans-serif;
+
+height:100vh;
+
+overflow:hidden;
+
+background:
+linear-gradient(
+135deg,
+#f0f9ff,
+#dbeafe
+);
+
+display:flex;
+
+flex-direction:column;
+
+align-items:center;
+
+position:relative;
+}
+
+/* GRID */
+
+body::before{
+
+content:"";
+
+position:absolute;
+
+inset:0;
+
+background-image:
+
+linear-gradient(
+rgba(37,99,235,.06) 1px,
+transparent 1px
+),
+
+linear-gradient(
+90deg,
+rgba(37,99,235,.06) 1px,
+transparent 1px
+);
+
+background-size:70px 70px;
+
+z-index:-1;
+}
+
+/* TOP */
+
+.top{
+
+width:100%;
+
+padding:25px 35px;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+}
+
+.title h1{
+
+font-size:52px;
+
+color:#2563eb;
+
+font-weight:900;
+
+text-shadow:
+0 0 20px rgba(37,99,235,.2);
+}
+
+.title p{
+
+margin-top:8px;
+
+font-size:20px;
+
+color:#374151;
+}
+
+/* STATS */
+
+.stats{
+
+display:flex;
+
+gap:16px;
+}
+
+.card{
+
+width:120px;
+
+padding:18px;
+
+border-radius:24px;
+
+background:
+rgba(255,255,255,.7);
+
+backdrop-filter:blur(10px);
+
+text-align:center;
+
+box-shadow:
+0 8px 25px rgba(0,0,0,.08);
+}
+
+.card h3{
+
+font-size:18px;
+
+color:#6b7280;
+
+margin-bottom:10px;
+}
+
+.card p{
+
+font-size:38px;
+
+font-weight:900;
+
+color:#111827;
+}
+
+/* GAME AREA */
+
+.game{
+
+flex:1;
+
+width:100%;
+
+display:flex;
+
+justify-content:space-around;
+
+align-items:center;
+}
+
+/* ELECTRONS AREA */
+
+.electron-bank{
+
+width:250px;
+
+display:flex;
+
+flex-wrap:wrap;
+
+gap:18px;
+
+justify-content:center;
+}
+
+/* ELECTRON */
+
+.electron{
+
+width:48px;
+
+height:48px;
+
+border-radius:50%;
+
+background:
+radial-gradient(
+circle,
+#60a5fa,
+#2563eb
+);
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+font-size:26px;
+
+font-weight:900;
+
+color:white;
+
+cursor:grab;
+
+box-shadow:
+0 0 25px rgba(37,99,235,.4);
+
+user-select:none;
+
+transition:.2s;
+}
+
+.electron:hover{
+
+transform:scale(1.08);
+}
+
+/* ATOM */
+
+.atom{
+
+position:relative;
+
+width:500px;
+
+height:500px;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+}
+
+/* SHELLS */
+
+.shell{
+
+position:absolute;
+
+border:
+4px dashed rgba(37,99,235,.5);
+
+border-radius:50%;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+transition:.2s;
+}
+
+.shell.active{
+
+box-shadow:
+0 0 25px rgba(37,99,235,.4);
+
+background:
+rgba(37,99,235,.05);
+}
+
+.shell1{
+
+width:180px;
+height:180px;
+}
+
+.shell2{
+
+width:320px;
+height:320px;
+}
+
+/* NUCLEUS */
+
+.nucleus{
+
+width:120px;
+
+height:120px;
+
+border-radius:50%;
+
+background:
+radial-gradient(
+circle,
+#fb7185,
+#ef4444
+);
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+flex-direction:column;
+
+color:white;
+
+font-weight:900;
+
+box-shadow:
+0 0 50px rgba(239,68,68,.4);
+}
+
+.nucleus h2{
+
+font-size:22px;
+}
+
+.nucleus p{
+
+font-size:15px;
+
+margin-top:4px;
+}
+
+/* SHELL COUNTS */
+
+.count{
+
+position:absolute;
+
+padding:8px 18px;
+
+border-radius:18px;
+
+background:white;
+
+font-weight:900;
+
+box-shadow:
+0 5px 15px rgba(0,0,0,.08);
+}
+
+.count1{
+
+top:100px;
+left:50%;
+transform:translateX(-50%);
+}
+
+.count2{
+
+bottom:70px;
+left:50%;
+transform:translateX(-50%);
+}
+
+/* MESSAGE CLOUD */
+
+.message{
+
+position:fixed;
+
+top:30px;
+
+left:50%;
+
+transform:translateX(-50%);
+
+background:white;
+
+padding:14px 24px;
+
+border-radius:18px;
+
+font-size:18px;
+
+font-weight:700;
+
+box-shadow:
+0 8px 20px rgba(0,0,0,.12);
+
+display:none;
+
+z-index:999;
+
+animation:
+pop .3s ease;
+}
+
+@keyframes pop{
+
+from{
+
+opacity:0;
+
+transform:
+translateX(-50%)
+translateY(-10px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:
+translateX(-50%)
+translateY(0);
+
+}
+
+}
+
+/* POPUP */
+
+.popup{
+
+position:fixed;
+
+inset:0;
+
+background:
+rgba(0,0,0,.45);
+
+display:none;
+
+justify-content:center;
+
+align-items:center;
+}
+
+.popup-box{
+
+width:340px;
+
+padding:35px;
+
+border-radius:28px;
+
+background:white;
+
+text-align:center;
+}
+
+.popup-box h1{
+
+font-size:38px;
+
+color:#16a34a;
+
+margin-bottom:15px;
+}
+
+.popup-box p{
+
+font-size:20px;
+
+margin-bottom:20px;
+
+color:#374151;
+}
+
+.popup-box button{
+
+padding:14px 28px;
+
+border:none;
+
+border-radius:18px;
+
+background:
+linear-gradient(
+135deg,
+#2563eb,
+#1d4ed8
+);
+
+color:white;
+
+font-size:18px;
+
+font-weight:900;
+
+cursor:pointer;
+}
+
+/* MOBILE */
+
+@media(max-width:1000px){
+
+.game{
+
+flex-direction:column;
+}
+
+.atom{
+
+width:380px;
+height:380px;
+}
+
+.shell1{
+
+width:150px;
+height:150px;
+}
+
+.shell2{
+
+width:260px;
+height:260px;
+}
+
+.title h1{
+
+font-size:38px;
+}
+
+.card{
+
+width:90px;
+padding:12px;
+}
+
+.card p{
+
+font-size:28px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="top">
+
+<div class="title">
+
+<h1>
+Shell Builder
+</h1>
+
+<p>
+Drag electrons into correct shells
+</p>
+
+</div>
+
+<div class="stats">
+
+<div class="card">
+
+<h3>
+Score
+</h3>
+
+<p id="score">
+0
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>
+Shell 1
+</h3>
+
+<p id="s1">
+0
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>
+Shell 2
+</h3>
+
+<p id="s2">
+0
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="game">
+
+<!-- ELECTRONS -->
+
+<div
+class="electron-bank"
+id="bank"
+></div>
+
+<!-- ATOM -->
+
+<div class="atom">
+
+<div
+class="shell shell2"
+id="shell2"
+></div>
+
+<div
+class="shell shell1"
+id="shell1"
+></div>
+
+<div class="nucleus">
+
+<h2>
+ATOM
+</h2>
+
+<p>
+Build Me
+</p>
+
+</div>
+
+<div class="count count1">
+
+2 MAX
+
+</div>
+
+<div class="count count2">
+
+8 MAX
+
+</div>
+
+</div>
+
+</div>
+
+<!-- POPUP -->
+
+<div
+class="popup"
+id="popup"
+>
+
+<div class="popup-box">
+
+<h1>
+SUCCESS
+</h1>
+
+<p>
+You built a stable atom!
+</p>
+
+<button onclick="location.reload()">
+
+Play Again
+
+</button>
+
+</div>
+
+</div>
+
+<div
+id="message"
+class="message"
+>
+
+Shell Full
+
+</div>
+
+<script>
+
+/* ELEMENTS */
+
+const bank =
+document.getElementById("bank");
+
+const shell1 =
+document.getElementById("shell1");
+
+const shell2 =
+document.getElementById("shell2");
+
+const scoreText =
+document.getElementById("score");
+
+const s1Text =
+document.getElementById("s1");
+
+const s2Text =
+document.getElementById("s2");
+
+/* VALUES */
+
+let score = 0;
+
+let shell1Count = 0;
+
+let shell2Count = 0;
+
+/* CREATE ELECTRONS */
+
+for(let i=0;i<10;i++){
+
+const electron =
+document.createElement("div");
+
+electron.classList.add(
+"electron"
+);
+
+electron.innerText =
+"−";
+
+electron.draggable = true;
+
+electron.id =
+"electron" + i;
+
+bank.appendChild(
+electron
+);
+
+/* DRAG */
+
+electron.addEventListener(
+"dragstart",
+e=>{
+
+e.dataTransfer.setData(
+"text",
+electron.id
+);
+
+}
+);
+
+}
+
+/* ALLOW DROP */
+
+function allowDrop(shell){
+
+shell.addEventListener(
+"dragover",
+e=>{
+
+e.preventDefault();
+
+shell.classList.add(
+"active"
+);
+
+}
+);
+
+shell.addEventListener(
+"dragleave",
+()=>{
+
+shell.classList.remove(
+"active"
+);
+
+}
+);
+
+}
+
+/* SHELL 1 */
+
+allowDrop(shell1);
+
+shell1.addEventListener(
+"drop",
+e=>{
+
+e.preventDefault();
+
+shell1.classList.remove(
+"active"
+);
+
+const id =
+e.dataTransfer.getData(
+"text"
+);
+
+const electron =
+document.getElementById(id);
+
+if(!electron) return;
+
+if(shell1Count >= 2){
+
+showMessage(
+"First Shell Full!"
+);
+
+return;
+
+}
+
+shell1.appendChild(
+electron
+);
+
+placeElectron(
+electron,
+shell1,
+shell1Count,
+2
+);
+
+shell1Count++;
+
+score += 10;
+
+update();
+
+checkWin();
+
+}
+);
+
+/* SHELL 2 */
+
+allowDrop(shell2);
+
+shell2.addEventListener(
+"drop",
+e=>{
+
+e.preventDefault();
+
+shell2.classList.remove(
+"active"
+);
+
+const id =
+e.dataTransfer.getData(
+"text"
+);
+
+const electron =
+document.getElementById(id);
+
+if(!electron) return;
+
+if(shell2Count >= 8){
+
+showMessage(
+"Second Shell Full!"
+);
+
+return;
+
+}
+
+
+shell2.appendChild(
+electron
+);
+
+placeElectron(
+electron,
+shell2,
+shell2Count,
+8
+);
+
+shell2Count++;
+
+score += 10;
+
+update();
+
+checkWin();
+
+}
+);
+
+/* PLACE ELECTRONS */
+
+function placeElectron(
+electron,
+shell,
+index,
+max
+){
+
+electron.style.position =
+"absolute";
+
+/* PERFECT CIRCLE ALIGNMENT */
+
+const angle =
+(index / max)
+*
+(Math.PI * 2);
+
+const radius =
+(shell.offsetWidth / 2) - 35;
+
+const center =
+(shell.offsetWidth / 2);
+
+const x =
+center +
+Math.cos(angle) * radius
+- 27;
+
+const y =
+center +
+Math.sin(angle) * radius
+- 27;
+
+electron.style.left =
+x + "px";
+
+electron.style.top =
+y + "px";
+
+}
+
+
+/* UPDATE */
+
+function update(){
+
+scoreText.innerText =
+score;
+
+s1Text.innerText =
+shell1Count;
+
+s2Text.innerText =
+shell2Count;
+
+}
+
+/* MESSAGE */
+
+function showMessage(text){
+
+const msg =
+document.getElementById(
+"message"
+);
+
+msg.innerText =
+text;
+
+msg.style.display =
+"block";
+
+setTimeout(()=>{
+
+msg.style.display =
+"none";
+
+},1500);
+
+}
+
+/* WIN */
+
+function checkWin(){
+
+if(
+shell1Count === 2
+&&
+shell2Count === 8
+){
+
+document.getElementById(
+"popup"
+).style.display =
+"flex";
+
+}
+
+}
+
+</script>
+
+</body>
+
+</html>

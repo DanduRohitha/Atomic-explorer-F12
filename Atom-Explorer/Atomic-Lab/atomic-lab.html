@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atomic Number Lab</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #0f0f16 0%, #151522 100%);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: #f1f1f7;
+            margin: 0;
+            padding: 30px 15px;
+            display: flex;
+            justify-content: center;
+        }
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .lab-container { width: 100%; max-width: 900px; background-color: #171724; padding: 30px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6); border: 1px solid #232336; }
+        
+        .lab-header { text-align: center; margin-bottom: 25px; border-bottom: 1px solid #232336; padding-bottom: 15px; position: relative; }
+        .project-title { font-size: 12px; text-transform: uppercase; letter-spacing: 2px; color: #4facfe; font-weight: bold; text-shadow: 0 0 8px rgba(79, 172, 254, 0.4); }
+        .lab-header h1 { margin: 5px 0; font-size: 2.2rem; color: #ffffff; }
+        .subtitle { margin: 0; color: #a0a0b8; }
+        
+        .main-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
+        @media (max-width: 768px) { .main-layout { grid-template-columns: 1fr; } }
+        .panel { background-color: #1e1e2f; padding: 20px; border-radius: 12px; border: 1px solid #28283d; }
+        .panel h2 { margin-top: 0; margin-bottom: 20px; font-size: 1.25rem; border-bottom: 2px solid #28283d; padding-bottom: 8px; color: #d1d1e0; }
+        
+        .counter-box { display: flex; justify-content: space-between; align-items: center; background-color: #171724; padding: 15px; border-radius: 8px; margin-bottom: 15px; transition: all 0.3s ease; }
+        .proton-box { border-left: 5px solid #ff4d4d; box-shadow: inset 5px 0 10px rgba(255, 77, 77, 0.05); }
+        .electron-box { border-left: 5px solid #3399ff; box-shadow: inset 5px 0 10px rgba(51, 153, 255, 0.05); }
+        
+        .particle-info { display: flex; align-items: center; gap: 12px; }
+        .particle-symbol { font-size: 24px; }
+        .particle-name { display: block; font-size: 16px; }
+        .particle-charge { color: #8a8a9e; font-size: 12px; }
+        
+        .btn-group { display: flex; align-items: center; }
+        .btn-group button { background-color: #4facfe; color: white; border: none; width: 35px; height: 35px; font-size: 20px; font-weight: bold; cursor: pointer; border-radius: 6px; transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .btn-group button:hover { background-color: #00c6ff; transform: scale(1.15); box-shadow: 0 0 10px #00c6ff; }
+        .btn-group button:active { transform: scale(0.9); }
+        .btn-group span { font-size: 22px; width: 45px; text-align: center; font-weight: bold; display: inline-block; }
+        
+        .element-card { background-color: #171724; text-align: center; padding: 25px; border-radius: 10px; border: 2px solid #00c6ff; margin-bottom: 20px; box-shadow: 0 0 15px rgba(0, 198, 255, 0.15), inset 0 0 15px rgba(0, 198, 255, 0.05); }
+        .element-card h1 { font-size: 4.5rem; margin: 0; color: #00c6ff; text-shadow: 0 0 12px rgba(0, 198, 255, 0.6); animation: pulseSymbol 3s ease-in-out infinite; }
+        @keyframes pulseSymbol { 0% { transform: scale(1); } 50% { transform: scale(1.04); } 100% { transform: scale(1); } }
+        .element-card h3 { margin: 5px 0 0 0; color: #ffffff; font-weight: 500; font-size: 1.4rem; }
+        
+        .stat-item { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #28283d; }
+        .stat-item span { color: #a0a0b8; }
+        
+        .explanation-panel { grid-column: span 2; margin-top: 10px; border-left: 5px solid #00c6ff; background-color: #1e1e2f; }
+        .explanation-panel h3 { margin-top: 0; color: #00c6ff; }
+        #explanation-text { line-height: 1.6; color: #d1d1e0; margin: 0; }
+        .flash-update { animation: popFlash 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        @keyframes popFlash { 0% { color: #00c6ff; transform: scale(1.25); } 100% { color: inherit; transform: scale(1); } }
+        
+        .level-badge {
+            position: absolute;
+            right: 0;
+            top: 0;
+            font-size: 12px;
+            padding: 4px 14px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="lab-container">
+        <header class="lab-header">
+            <span id="badge-display" class="level-badge"></span>
+            <span class="project-title">🌌 Atom Universe Module</span>
+            <h1>🔬 Atomic Number Lab</h1>
+            <p class="subtitle">Discover how protons define element identity based on your chosen difficulty</p>
+        </header>
+
+        <div class="main-layout">
+            <div class="panel control-panel">
+                <h2>Modify Particles</h2>
+                
+                <div class="counter-box proton-box">
+                    <div class="particle-info">
+                        <span class="particle-symbol">🔴</span>
+                        <div>
+                            <strong class="particle-name">Protons</strong>
+                            <small class="particle-charge">Charge: +1</small>
+                        </div>
+                    </div>
+                    <div class="btn-group">
+                        <button onclick="changeParticles('proton', -1)">-</button>
+                        <span id="proton-count">1</span>
+                        <button onclick="changeParticles('proton', 1)">+</button>
+                    </div>
+                </div>
+
+                <div class="counter-box electron-box" id="electron-row" style="display: none;">
+                    <div class="particle-info">
+                        <span class="particle-symbol">🔵</span>
+                        <div>
+                            <strong class="particle-name">Electrons</strong>
+                            <small class="particle-charge">Charge: -1</small>
+                        </div>
+                    </div>
+                    <div class="btn-group">
+                        <button onclick="changeParticles('electron', -1)">-</button>
+                        <span id="electron-count">1</span>
+                        <button onclick="changeParticles('electron', 1)">+</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel display-panel">
+                <h2>Element Status</h2>
+                <div class="element-card">
+                    <h1 id="element-symbol">H</h1>
+                    <h3 id="element-name">Hydrogen</h3>
+                </div>
+
+                <div class="stats-list">
+                    <div class="stat-item">
+                        <span>Atomic Number (Z):</span>
+                        <strong id="stat-atomic">1</strong>
+                    </div>
+                    <div class="stat-item" id="charge-row" style="display: none;">
+                        <span>Net Charge / State:</span>
+                        <strong id="stat-charge">0 (Neutral Atom)</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel explanation-panel">
+            <h3>💡 Concept Explanation</h3>
+            <p id="explanation-text">Protons give an atom its unique identity.</p>
+        </div>
+    </div>
+
+    <script>
+        // Reads selection from the teammate's front page memory key
+       let currentMode;
+
+const difficulty =
+localStorage.getItem("difficulty");
+
+if (difficulty === "Easy") {
+
+    currentMode = "easy";
+
+}
+else if (difficulty === "Medium") {
+
+    currentMode = "medium";
+
+}
+else {
+
+    currentMode = "hard";
+
+}
+
+        const elementsData = {
+            1: { name: "Hydrogen", symbol: "H" }, 2: { name: "Helium", symbol: "He" },
+            3: { name: "Lithium", symbol: "Li" }, 4: { name: "Beryllium", symbol: "Be" },
+            5: { name: "Boron", symbol: "B" }, 6: { name: "Carbon", symbol: "C" },
+            7: { name: "Nitrogen", symbol: "N" }, 8: { name: "Oxygen", symbol: "O" },
+            9: { name: "Fluorine", symbol: "F" }, 10: { name: "Neon", symbol: "Ne" },
+            11: { name: "Sodium", symbol: "Na" }, 12: { name: "Magnesium", symbol: "Mg" },
+            13: { name: "Aluminum", symbol: "Al" }, 14: { name: "Silicon", symbol: "Si" },
+            15: { name: "Phosphorus", symbol: "P" }, 16: { name: "Sulfur", symbol: "S" },
+            17: { name: "Chlorine", symbol: "Cl" }, 18: { name: "Argon", symbol: "Ar" },
+            19: { name: "Potassium", symbol: "K" }, 20: { name: "Calcium", symbol: "Ca" },
+            26: { name: "Iron", symbol: "Fe" }, 79: { name: "Gold", symbol: "Au" },
+            92: { name: "Uranium", symbol: "U" }, 118: { name: "Oganesson", symbol: "Og" }
+        };
+
+        let protonCount = 1;
+        let electronCount = 1;
+
+        // Render configuration top badge tracker
+        const badge = document.getElementById('badge-display');
+        badge.innerText = `${currentMode} mode`;
+        if(currentMode === 'easy') { badge.style.backgroundColor = '#00e676'; badge.style.color = '#000'; }
+        if(currentMode === 'medium') { badge.style.backgroundColor = '#00c6ff'; badge.style.color = '#000'; }
+        if(currentMode === 'hard') { badge.style.backgroundColor = '#4facfe'; badge.style.color = '#fff'; }
+
+        function triggerFlashAnimation(elementId) {
+            const target = document.getElementById(elementId);
+            if (!target) return;
+            target.classList.remove('flash-update');
+            void target.offsetWidth; 
+            target.classList.add('flash-update');
+        }
+
+        function changeParticles(type, amount) {
+            if (type === 'proton') {
+                const maxProtons = (currentMode === 'easy') ? 10 : 118;
+                protonCount += amount;
+                if (protonCount < 1) protonCount = 1;
+                if (protonCount > maxProtons) protonCount = maxProtons;
+                document.getElementById('proton-count').innerText = protonCount;
+                triggerFlashAnimation('proton-count');
+            } else if (type === 'electron') {
+                electronCount += amount;
+                if (electronCount < 0) electronCount = 0;
+                if (electronCount > 120) electronCount = 120;
+                document.getElementById('electron-count').innerText = electronCount;
+                triggerFlashAnimation('electron-count');
+            }
+
+            triggerFlashAnimation('element-symbol');
+            updateAtomicLab();
+        }
+
+        function updateAtomicLab() {
+            if (currentMode === 'easy' && protonCount > 10) { 
+                protonCount = 10; 
+                document.getElementById('proton-count').innerText = 10;
+            }
+
+            const element = elementsData[protonCount] || { name: `Element ${protonCount}`, symbol: `Un` };
+            
+            document.getElementById('element-symbol').innerText = element.symbol;
+            document.getElementById('element-name').innerText = element.name;
+            document.getElementById('stat-atomic').innerText = protonCount;
+
+            const electronUI = document.getElementById('electron-row');
+            const chargeUI = document.getElementById('charge-row');
+            const expText = document.getElementById('explanation-text');
+
+            if (currentMode === 'easy') {
+                electronUI.style.display = 'none';
+                chargeUI.style.display = 'none';
+                expText.innerText = `Easy Mode: You have assembled ${protonCount} proton(s). This results in ${element.name}. The number of protons matches the Atomic Number (Z). Max limit capped at 10.`;
+            }
+            else if (currentMode === 'medium') {
+                electronUI.style.display = 'none';
+                chargeUI.style.display = 'none';
+                expText.innerText = `Medium Mode: Unlocked the full periodic table map rows up to element 118. Current selector element: ${element.name} (Z = ${protonCount}).`;
+            }
+            else if (currentMode === 'hard') {
+                electronUI.style.display = 'flex';
+                chargeUI.style.display = 'flex';
+
+                const chargeValue = protonCount - electronCount;
+                let signValue = chargeValue > 0 ? `+${chargeValue}` : chargeValue;
+                
+                let structureState = "Neutral Atom";
+                if (chargeValue > 0) structureState = "Positive Ion (Cation)";
+                if (chargeValue < 0) structureState = "Negative Ion (Anion)";
+
+                document.getElementById('stat-charge').innerHTML = `${signValue} &nbsp;(<span style="color: #4facfe; font-weight:bold;">${structureState}</span>)`;
+                expText.innerHTML = `Hard Mode: Advanced ionization configuration system. When protons (${protonCount}) and electrons (${electronCount}) drift out of balance, the atom becomes an Ion. Formula: Charge = Z - e⁻.`;
+            }
+        }
+
+        window.onload = updateAtomicLab;
+    </script>
+</body>
+</html>

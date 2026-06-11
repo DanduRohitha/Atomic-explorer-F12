@@ -1,0 +1,475 @@
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html,
+body{
+  overflow-x:hidden;
+  scroll-behavior:smooth;
+}
+
+body{
+
+  font-family:Arial,sans-serif;
+
+  min-height:100vh;
+
+  color:white;
+
+  overflow-x:hidden;
+
+  position:relative;
+
+  background:
+  linear-gradient(
+  rgba(2,6,23,.80),
+  rgba(2,6,23,.90)
+  ),
+  url("https://images.unsplash.com/photo-1462331940025-496dfbfc7564?q=80&w=2070&auto=format&fit=crop");
+
+  background-size:cover;
+
+  background-position:center;
+
+  background-attachment:fixed;
+
+  animation:
+  galaxyMove 120s linear infinite;
+}
+
+/* SOFT SPACE GLOW */
+
+body::after{
+
+  content:"";
+
+  position:fixed;
+
+  inset:0;
+
+  background:
+
+  radial-gradient(
+  circle at 20% 20%,
+  rgba(59,130,246,.12),
+  transparent 28%
+  ),
+
+  radial-gradient(
+  circle at 80% 25%,
+  rgba(168,85,247,.14),
+  transparent 30%
+  ),
+
+  radial-gradient(
+  circle at 50% 80%,
+  rgba(99,102,241,.10),
+  transparent 35%
+  );
+
+  filter:blur(80px);
+
+  z-index:-1;
+
+  animation:
+  nebulaMove 18s ease-in-out infinite alternate;
+}
+
+/* ========================= */
+/* ANIMATIONS */
+/* ========================= */
+
+@keyframes galaxyMove{
+
+  from{
+
+    background-position:
+    center 0px;
+
+  }
+
+  to{
+
+    background-position:
+    center -300px;
+
+  }
+
+}
+
+@keyframes nebulaMove{
+
+  from{
+
+    transform:
+    scale(1)
+    translateX(0);
+
+  }
+
+  to{
+
+    transform:
+    scale(1.06)
+    translateX(-20px);
+
+  }
+
+}
+
+/* ========================= */
+/* CONTAINER */
+/* ========================= */
+
+.container{
+
+  width:95%;
+
+  margin:auto;
+
+  padding:25px 0 60px;
+}
+
+/* ========================= */
+/* TOP BAR */
+/* ========================= */
+
+.top-bar{
+
+  display:flex;
+
+  justify-content:center;
+
+  margin-bottom:35px;
+}
+
+/* ========================= */
+/* TITLE */
+/* ========================= */
+
+.title-area{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:18px;
+}
+
+.title-area h1{
+
+  font-size:72px;
+
+  font-weight:900;
+
+  text-shadow:
+  0 0 35px rgba(99,102,241,.9);
+}
+
+/* ========================= */
+/* LINES */
+/* ========================= */
+
+.line{
+
+  width:160px;
+
+  height:3px;
+
+  border-radius:20px;
+
+  background:
+  linear-gradient(
+  90deg,
+  transparent,
+  #3b82f6,
+  transparent
+  );
+
+  box-shadow:
+  0 0 16px rgba(59,130,246,.7);
+}
+
+/* ========================= */
+/* GRID */
+/* ========================= */
+
+.games-grid{
+
+  display:grid;
+
+  grid-template-columns:
+  repeat(auto-fit,minmax(240px,1fr));
+
+  gap:22px;
+}
+
+/* ========================= */
+/* CARD */
+/* ========================= */
+
+.game-card{
+
+  background:
+  rgba(10,15,40,.58);
+
+  border:
+  1px solid rgba(255,255,255,.05);
+
+  backdrop-filter:
+  blur(12px);
+
+  border-radius:24px;
+
+  padding:22px 18px;
+
+  transition:.35s;
+
+  position:relative;
+
+  overflow:hidden;
+
+  height:260px;
+
+  display:flex;
+
+  flex-direction:column;
+
+  align-items:center;
+
+  justify-content:center;
+
+  text-align:center;
+}
+
+/* CARD HOVER */
+
+.game-card:hover{
+
+  transform:
+  translateY(-8px);
+
+  box-shadow:
+  0 0 35px rgba(99,102,241,.28);
+}
+
+/* INNER LIGHT */
+
+.game-card::before{
+
+  content:"";
+
+  position:absolute;
+
+  inset:0;
+
+  background:
+  linear-gradient(
+  135deg,
+  rgba(59,130,246,.05),
+  rgba(139,92,246,.05)
+  );
+
+  opacity:0;
+
+  transition:.3s;
+}
+
+.game-card:hover::before{
+
+  opacity:1;
+}
+
+/* ========================= */
+/* ICON */
+/* ========================= */
+
+.game-icon{
+
+  font-size:44px;
+
+  margin-bottom:14px;
+
+  filter:
+  drop-shadow(0 0 14px rgba(99,102,241,.7));
+
+  position:relative;
+
+  z-index:2;
+}
+
+
+/* ========================= */
+/* GAME IMAGE */
+/* ========================= */
+
+.game-image{
+
+width:100px;
+
+height:100px;
+
+object-fit:contain;
+
+display:block;
+
+margin:0 auto 15px;
+
+border-radius:16px;
+
+position:relative;
+
+z-index:2;
+
+}
+/* ========================= */
+/* TITLE */
+/* ========================= */
+
+.game-card h2{
+
+  font-size:20px;
+
+  margin-bottom:10px;
+
+  position:relative;
+
+  z-index:2;
+}
+
+/* ========================= */
+/* DESCRIPTION */
+/* ========================= */
+
+.game-card p{
+
+  opacity:.82;
+
+  margin-bottom:18px;
+
+  line-height:1.4;
+
+  font-size:14px;
+
+  position:relative;
+
+  z-index:2;
+}
+
+/* ========================= */
+/* BUTTON */
+/* ========================= */
+
+.game-card button{
+
+  border:none;
+
+  padding:11px 24px;
+
+  border-radius:14px;
+
+  font-size:15px;
+
+  font-weight:700;
+
+  cursor:pointer;
+
+  color:white;
+
+  background:
+  linear-gradient(
+  135deg,
+  #2563eb,
+  #7c3aed
+  );
+
+  transition:.3s;
+
+  box-shadow:
+  0 0 18px rgba(99,102,241,.35);
+
+  position:relative;
+
+  z-index:2;
+}
+
+/* BUTTON HOVER */
+
+.game-card button:hover{
+
+  transform:
+  scale(1.06);
+
+  box-shadow:
+  0 0 30px rgba(99,102,241,.75);
+}
+
+/* ========================= */
+/* RESPONSIVE */
+/* ========================= */
+
+@media(max-width:900px){
+
+  .title-area h1{
+
+    font-size:48px;
+  }
+
+  .line{
+
+    width:80px;
+  }
+
+  .games-grid{
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(220px,1fr));
+  }
+
+}
+
+@media(max-width:600px){
+
+  .title-area{
+
+    gap:10px;
+  }
+
+  .title-area h1{
+
+    font-size:34px;
+  }
+
+  .line{
+
+    width:45px;
+  }
+
+  .game-card{
+
+    height:240px;
+  }
+/* GAME CARD */
+
+.game-card{
+
+background:white;
+
+padding:20px;
+
+border-radius:20px;
+
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+text-align:center;
+
+}
+
+/* ADD IMAGE CSS HERE */
+
+
+}

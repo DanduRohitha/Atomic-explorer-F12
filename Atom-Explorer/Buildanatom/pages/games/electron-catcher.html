@@ -1,0 +1,821 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+>
+
+<title>
+Electron Catcher
+</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+
+overflow:hidden;
+
+font-family:Arial,sans-serif;
+
+height:100vh;
+
+background:
+linear-gradient(
+180deg,
+#020617,
+#071226,
+#0f172a
+);
+
+color:white;
+
+position:relative;
+}
+
+/* GRID */
+
+body::before{
+
+content:"";
+
+position:absolute;
+
+inset:0;
+
+background-image:
+
+linear-gradient(
+rgba(59,130,246,.06) 1px,
+transparent 1px
+),
+
+linear-gradient(
+90deg,
+rgba(59,130,246,.06) 1px,
+transparent 1px
+);
+
+background-size:
+55px 55px;
+
+animation:
+gridMove 8s linear infinite;
+
+z-index:-1;
+}
+
+@keyframes gridMove{
+
+from{
+transform:translateY(0);
+}
+
+to{
+transform:translateY(55px);
+}
+
+}
+
+/* TOP BAR */
+
+.top-bar{
+
+position:absolute;
+
+top:0;
+
+left:0;
+
+width:100%;
+
+padding:20px 30px;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+z-index:100;
+}
+
+.title{
+
+font-size:30px;
+
+font-weight:900;
+
+display:flex;
+
+flex-direction:column;
+
+gap:5px;
+
+text-shadow:
+0 0 20px rgba(59,130,246,.9);
+}
+
+.title span{
+
+font-size:14px;
+
+font-weight:400;
+
+opacity:.8;
+}
+
+/* STATS */
+
+.stats{
+
+display:flex;
+
+gap:14px;
+}
+
+.stat-box{
+
+width:110px;
+
+background:
+rgba(255,255,255,.06);
+
+border:
+1px solid rgba(255,255,255,.08);
+
+border-radius:18px;
+
+padding:12px;
+
+text-align:center;
+
+backdrop-filter:blur(10px);
+}
+
+.stat-box h3{
+
+font-size:14px;
+
+opacity:.7;
+
+margin-bottom:6px;
+}
+
+.stat-box p{
+
+font-size:28px;
+
+font-weight:900;
+}
+
+/* PLAYER */
+
+.player{
+
+position:absolute;
+
+bottom:30px;
+
+left:50%;
+
+transform:translateX(-50%);
+
+width:130px;
+
+height:28px;
+
+border-radius:20px;
+
+background:
+linear-gradient(
+90deg,
+#38bdf8,
+#2563eb
+);
+
+box-shadow:
+0 0 25px #38bdf8;
+
+z-index:50;
+}
+
+/* ELECTRONS */
+
+.item{
+
+position:absolute;
+
+width:45px;
+
+height:45px;
+
+border-radius:50%;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+font-size:28px;
+
+font-weight:900;
+}
+
+/* BLUE */
+
+.electron{
+
+background:
+radial-gradient(circle,
+#67e8f9,
+#2563eb);
+
+box-shadow:
+0 0 25px #38bdf8;
+}
+
+/* RED */
+
+.danger{
+
+background:
+radial-gradient(circle,
+#fb7185,
+#dc2626);
+
+box-shadow:
+0 0 25px #ef4444;
+}
+
+/* GOLD */
+
+.gold{
+
+background:
+radial-gradient(circle,
+#fde047,
+#f59e0b);
+
+box-shadow:
+0 0 25px #facc15;
+}
+
+/* FLOATING */
+
+.floating{
+
+position:absolute;
+
+font-size:24px;
+
+font-weight:900;
+
+pointer-events:none;
+
+animation:
+floatUp .8s linear forwards;
+}
+
+@keyframes floatUp{
+
+from{
+
+opacity:1;
+
+transform:
+translateY(0);
+
+}
+
+to{
+
+opacity:0;
+
+transform:
+translateY(-50px);
+
+}
+
+}
+
+/* POPUP */
+
+.popup{
+
+position:fixed;
+
+inset:0;
+
+background:
+rgba(0,0,0,.75);
+
+display:none;
+
+justify-content:center;
+
+align-items:center;
+
+z-index:500;
+}
+
+.popup-content{
+
+width:420px;
+
+background:
+rgba(15,23,42,.96);
+
+padding:40px;
+
+border-radius:30px;
+
+text-align:center;
+
+border:
+1px solid rgba(255,255,255,.08);
+}
+
+.popup-content h1{
+
+font-size:42px;
+
+margin-bottom:20px;
+}
+
+.popup-content h2{
+
+font-size:28px;
+
+margin-bottom:25px;
+}
+
+.popup-content button{
+
+border:none;
+
+padding:15px 35px;
+
+border-radius:18px;
+
+background:
+linear-gradient(
+135deg,
+#2563eb,
+#06b6d4
+);
+
+color:white;
+
+font-size:18px;
+
+font-weight:700;
+
+cursor:pointer;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="top-bar">
+
+<div class="title">
+
+Electron Catcher
+
+<span>
+Catch Electrons • Avoid Dangerous Particles
+</span>
+
+</div>
+
+<div class="stats">
+
+<div class="stat-box">
+
+<h3>
+Score
+</h3>
+
+<p id="score">
+0
+</p>
+
+</div>
+
+<div class="stat-box">
+
+<h3>
+Time
+</h3>
+
+<p id="time">
+40
+</p>
+
+</div>
+
+<div class="stat-box">
+
+<h3>
+Caught
+</h3>
+
+<p id="caught">
+0
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div
+class="player"
+id="player"
+></div>
+
+<div
+class="popup"
+id="popup"
+>
+
+<div class="popup-content">
+
+<h1>
+Great Job!
+</h1>
+
+<h2>
+Final Score:
+<span id="finalScore">
+0
+</span>
+</h2>
+
+<button onclick="location.reload()">
+Play Again
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+/* AUDIO */
+
+const catchSound =
+new Audio(
+"https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3"
+);
+
+const wrongSound =
+new Audio(
+"https://assets.mixkit.co/active_storage/sfx/2955/2955-preview.mp3"
+);
+
+const goldSound =
+new Audio(
+"https://assets.mixkit.co/active_storage/sfx/2018/2018-preview.mp3"
+);
+
+/* ELEMENTS */
+
+const player =
+document.getElementById("player");
+
+const scoreText =
+document.getElementById("score");
+
+const timeText =
+document.getElementById("time");
+
+const caughtText =
+document.getElementById("caught");
+
+/* VARIABLES */
+
+let score = 0;
+
+let caught = 0;
+
+let time = 40;
+
+let playerX =
+window.innerWidth / 2 - 65;
+
+/* PLAYER MOVEMENT */
+
+document.addEventListener(
+"mousemove",
+(e)=>{
+
+playerX = e.clientX - 65;
+
+if(playerX < 0){
+
+playerX = 0;
+
+}
+
+if(playerX > window.innerWidth - 130){
+
+playerX =
+window.innerWidth - 130;
+
+}
+
+player.style.left =
+playerX + "px";
+
+}
+);
+
+/* TIMER */
+
+const timer =
+setInterval(()=>{
+
+time--;
+
+timeText.innerText =
+time;
+
+if(time <= 0){
+
+endGame();
+
+}
+
+},1000);
+
+/* CREATE ITEMS */
+
+function createItem(type){
+
+const item =
+document.createElement("div");
+
+item.classList.add(
+"item",
+type
+);
+
+item.innerText =
+
+type === "electron"
+? "-"
+
+:
+
+type === "danger"
+? "X"
+
+:
+
+"⚡";
+
+let x =
+Math.random()
+*
+(window.innerWidth - 50);
+
+let y = -50;
+
+item.style.left =
+x + "px";
+
+item.style.top =
+y + "px";
+
+document.body.appendChild(
+item
+);
+
+/* SPEED */
+
+let progress =
+(40 - time) / 40;
+
+let speed =
+3 + (progress * 5);
+
+/* FALL */
+
+const fall =
+setInterval(()=>{
+
+y += speed;
+
+item.style.top =
+y + "px";
+
+/* COLLISION */
+
+const pRect =
+player.getBoundingClientRect();
+
+const iRect =
+item.getBoundingClientRect();
+
+if(
+
+pRect.left < iRect.right &&
+pRect.right > iRect.left &&
+pRect.top < iRect.bottom &&
+pRect.bottom > iRect.top
+
+){
+
+if(type === "electron"){
+
+score += 10;
+
+caught++;
+
+catchSound.currentTime = 0;
+
+catchSound.play();
+
+showFloating(
+"+10",
+x,
+y,
+"#22c55e"
+);
+
+}
+
+else if(type === "gold"){
+
+score += 50;
+
+caught++;
+
+goldSound.currentTime = 0;
+
+goldSound.play();
+
+showFloating(
+"+50",
+x,
+y,
+"#facc15"
+);
+
+}
+
+else{
+
+score -= 15;
+
+wrongSound.currentTime = 0;
+
+wrongSound.play();
+
+showFloating(
+"-15",
+x,
+y,
+"#ef4444"
+);
+
+}
+
+scoreText.innerText =
+score;
+
+caughtText.innerText =
+caught;
+
+item.remove();
+
+clearInterval(fall);
+
+}
+
+/* REMOVE */
+
+if(y > window.innerHeight){
+
+item.remove();
+
+clearInterval(fall);
+
+}
+
+},20);
+
+}
+
+/* FLOATING */
+
+function showFloating(
+text,
+x,
+y,
+color
+){
+
+const float =
+document.createElement("div");
+
+float.classList.add(
+"floating"
+);
+
+float.innerText =
+text;
+
+float.style.left =
+x + "px";
+
+float.style.top =
+y + "px";
+
+float.style.color =
+color;
+
+document.body.appendChild(
+float
+);
+
+setTimeout(()=>{
+
+float.remove();
+
+},800);
+
+}
+
+/* SPAWN */
+
+/* SPAWN */
+
+setInterval(()=>{
+
+/* NORMAL ELECTRONS */
+
+createItem("electron");
+
+createItem("electron");
+
+/* MORE X PARTICLES */
+
+if(Math.random() > .25){
+
+createItem("danger");
+
+}
+
+/* GOLD PARTICLES */
+
+if(Math.random() > .82){
+
+createItem("gold");
+
+}
+
+},500);
+
+/* END GAME */
+
+function endGame(){
+
+clearInterval(timer);
+
+document.getElementById(
+"popup"
+).style.display =
+"flex";
+
+document.getElementById(
+"finalScore"
+).innerText =
+score;
+
+}
+
+</script>
+
+</body>
+
+</html>
+
